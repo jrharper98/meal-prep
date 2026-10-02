@@ -1,5 +1,5 @@
 /* Meal Prep service worker. Bump CACHE on every deploy so phones pick up the new files. */
-const CACHE = 'mealprep-v1.1.2';
+const CACHE = 'mealprep-v1.1.3';
 const SHELL = [
   './',
   './index.html',
