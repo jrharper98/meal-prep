@@ -1,5 +1,5 @@
-/* Meal Prep service worker. Bump CACHE on every deploy so phones pick up the new files. */
-const CACHE = 'mealprep-v1.1.3';
+/* My Meal Plan service worker. Bump CACHE on every deploy so phones pick up the new files. */
+const CACHE = 'mealprep-v1.2.1';
 const SHELL = [
   './',
   './index.html',
@@ -74,7 +74,7 @@ self.addEventListener('push', (event) => {
   try { data = event.data ? event.data.json() : {}; } catch (e) { data = { body: event.data && event.data.text() }; }
   const title = data.title || 'Tonight\'s move';
   event.waitUntil(self.registration.showNotification(title, {
-    body: data.body || 'Open Meal Prep to see what to move and pack for tomorrow.',
+    body: data.body || 'Open My Meal Plan to see what to move and pack for tomorrow.',
     icon: './icons/icon-192.png',
     badge: './icons/icon-192.png',
     tag: data.tag || 'tonight',

@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Meal Prep</title>
+<title>My Meal Plan</title>
 <meta name="theme-color" content="#F3F5F0" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#131916" media="(prefers-color-scheme: dark)">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Meal Prep">
+<meta name="apple-mobile-web-app-title" content="My Meal Plan">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -169,7 +169,7 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
 <body>
 <div class="wrap">
   <header class="top">
-    <h1>Meal Prep</h1>
+    <h1>My Meal Plan</h1>
     <button class="sync" id="syncBadge" type="button">Local only</button>
   </header>
 
@@ -253,7 +253,16 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
     </ul>
 
     <h3>Week A prep, about 2 hours 20 minutes</h3>
-    <p class="muted">Makes 14 mains (5 × A1, 5 × A2, 4 × A3), 4 oats jars (Days 4–7), 12 egg muffins, a batch of pesto, and the vinaigrette.</p>
+    <p class="muted">Follows the big shopping trip. Recipes for all of these are under the Week A heading on the Recipes tab.</p>
+    <ul>
+      <li><b>A1</b> Sheet-pan chicken, shiitake, broccoli &amp; sweet potato, 5 servings, with 5 tahini sauce cups</li>
+      <li><b>A2</b> Turkey, lentil &amp; cremini chili, 5 servings</li>
+      <li><b>A3</b> Salmon-quinoa cakes &amp; roasted cauliflower, 4 servings, with 4 dill yogurt cups</li>
+      <li>Overnight oats jars, 4, for Days 4–7</li>
+      <li>Egg muffins, 12, spinach &amp; cremini</li>
+      <li>Pepita-cilantro pesto, frozen as cubes; 5 for this week's chili, 5 for next week's shawarma bowls</li>
+      <li>Pomegranate vinaigrette, one small jar</li>
+    </ul>
     <ol class="steps">
       <li><span class="t">0:00</span> Mince all the garlic (11 cloves) and let it sit 10 minutes. Oven to 425°F. Start ⅓ cup quinoa.</li>
       <li><span class="t">0:05</span> Cube sweet potatoes, toss with oil and spices, into the oven for a 10-minute head start. Season the chicken thighs; trim the shiitake and broccoli.</li>
@@ -269,7 +278,15 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
     </ol>
 
     <h3>Week B prep, about 1 hour 50 minutes</h3>
-    <p class="muted">Makes 14 mains (5 × B1, 5 × B2, 4 × B3), 8 baked oat cups (Days 4–7), and 12 egg muffins. Chicken moves from freezer to fridge on Friday night; thaw the shrimp in cold water while you start.</p>
+    <p class="muted">Follows the quick stop. Chicken moves from freezer to fridge on Friday night; thaw the shrimp in cold water while you start. Recipes are under the Week B heading on the Recipes tab.</p>
+    <ul>
+      <li><b>B1</b> Miso-ginger chicken, oyster mushrooms &amp; cabbage over brown rice, 5 servings</li>
+      <li><b>B2</b> Shawarma chicken bowls with chickpeas &amp; carrots, 5 servings, with 5 garlic labneh cups</li>
+      <li><b>B3</b> Shrimp, broccoli &amp; shiitake stir-fry with soba, 4 servings</li>
+      <li>Baked oat cups, 8, for Days 4–7</li>
+      <li>Egg muffins, 12, kale &amp; scallion</li>
+      <li>No pesto or vinaigrette this week: pull 5 pesto cubes from the freezer for B2, and the vinaigrette jar from the fridge if you want it</li>
+    </ul>
     <ol class="steps">
       <li><span class="t">0:00</span> Mince all the garlic (8 cloves) and let it sit. Oven to 425°F. Big pot of water on to boil for the rice.</li>
       <li><span class="t">0:05</span> Marinate the chicken breast. Season the thighs. Two B2 pans into the oven: chicken with onion, and carrots with chickpeas.</li>
@@ -294,75 +311,122 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
       <h3>Big trip: Rainbow <small>before Week A prep</small></h3>
       <p class="sub">Produce</p>
       <ul class="check">
-        <li>Sweet potatoes, 1½ lb (about 2 medium)</li>
-        <li>Broccoli, 1½ lb, plus 1 crown for fish nights this week</li>
-        <li>Cauliflower, 2 heads</li>
-        <li>Shiitake, 12 oz (for A1)</li>
-        <li>Cremini, 1 lb 10 oz</li>
-        <li>Spinach, 5 oz</li>
-        <li>Cabbage, 1 large head (about 3 lb, keeps 2+ weeks; the extra is for fish nights)</li>
-        <li>Carrots, 3 lb bag (keeps 2 weeks)</li>
-        <li>Onions, 4</li>
-        <li>Garlic, 3 heads</li>
-        <li>Lemons, 6</li>
-        <li>Limes, 3</li>
-        <li>Cilantro, 2 bunches</li>
-        <li>Dill, 1 bunch (parsley if they're out)</li>
-        <li>Dried epazote, small bag from bulk spices (fresh only shows up in summer)</li>
-        <li>Broth herbs: oregano and thyme, 1 pack each; rosemary and sage for your base</li>
-        <li class="seasonal">In season only: 2–3 bell peppers (about July to November), an avocado (spring to early fall), winter squash (fall and winter)</li>
+        <li data-k="sweet-potatoes">Sweet potatoes, 1½ lb (about 2 medium)</li>
+        <li data-k="broccoli">Broccoli, 1½ lb + 1 crown (the extra crown is for fish nights this week)</li>
+        <li data-k="cauliflower">Cauliflower, 2 heads</li>
+        <li data-k="shiitake-mushrooms">Shiitake mushrooms, 12 oz (for A1)</li>
+        <li data-k="cremini-mushrooms">Cremini mushrooms, 1 lb 10 oz</li>
+        <li data-k="spinach">Spinach, 5 oz</li>
+        <li data-k="cabbage">Cabbage, 1 large head, about 3 lb (keeps 2+ weeks; the extra is for fish nights)</li>
+        <li data-k="carrots">Carrots, 3 lb bag (keeps 2 weeks)</li>
+        <li data-k="onions">Onions, 4</li>
+        <li data-k="garlic">Garlic, 3 heads (the broth eats 1–2 cloves a cup on top of the recipes)</li>
+        <li data-k="lemons">Lemons, 6</li>
+        <li data-k="limes">Limes, 3</li>
+        <li data-k="cilantro">Cilantro, 2 bunches</li>
+        <li data-k="dill">Dill, 1 bunch (parsley if they&#x27;re out)</li>
+        <li data-k="oregano">Oregano, 1 pack (broth herbs; one clamshell is about a week of steeping)</li>
+        <li data-k="thyme">Thyme, 1 pack (broth herbs)</li>
+        <li data-k="rosemary">Rosemary, 1 pack (broth base)</li>
+        <li data-k="sage">Sage, 1 pack (broth base)</li>
+        <li data-k="bell-peppers" class="seasonal">Bell peppers, 2–3 (in season only, about July to November)</li>
+        <li data-k="winter-squash" class="seasonal">Winter squash, 1 small (in season only: fall and winter, butternut or kabocha)</li>
       </ul>
-      <p class="sub">Dairy, eggs, fermented</p>
+      <p class="sub">Dairy, eggs, fermented, fridge</p>
       <ul class="check">
-        <li>Eggs, 2 dozen</li>
-        <li>Plain 2% Greek yogurt, 16 oz tub</li>
-        <li>Siggi's vanilla cups (5.3 oz), 6: three for gym breakfasts, plus Day 7 and spares (buy the next 6 on the quick stop so dates stay fresh)</li>
-        <li>2% milk, ½ gallon + 1 pint</li>
-        <li>2% cottage cheese, 1 single-serve cup (Week A muffins)</li>
-        <li>Refrigerated, unpasteurized kimchi, 2 × 16 oz jars</li>
+        <li data-k="eggs">Eggs, 2 dozen (both weeks of egg muffins, the salmon cakes and the oat cups)</li>
+        <li data-k="plain-2-greek-yogurt">Plain 2% Greek yogurt, 16 oz tub</li>
+        <li data-k="siggi-s-vanilla-cups">Siggi&#x27;s vanilla cups, 6 × 5.3 oz (3 gym breakfasts, Day 7, plus spares; buy 6 more on the quick stop)</li>
+        <li data-k="2-milk">2% milk, ½ gallon + 1 pint</li>
+        <li data-k="2-cottage-cheese">2% cottage cheese, 1 single-serve cup (Week A egg muffins)</li>
+        <li data-k="kimchi">Kimchi, 2 × 16 oz jars (¼ cup a day; refrigerated case, unpasteurized)</li>
+        <li data-k="sea-moss-soursop-gel">Sea moss soursop gel, 1 jar (refrigerated section, or wherever you bought your current jar; buy when you&#x27;re low)</li>
       </ul>
-      <p class="sub">Bulk and pantry</p>
+      <p class="sub">Bulk staples</p>
+      <ul class="check">
+        <li data-k="rolled-oats">Rolled oats, 1 lb (32 oz jar)</li>
+        <li data-k="chia-seeds">Chia seeds, 4 oz (8 oz jar)</li>
+        <li data-k="whole-flaxseed">Whole flaxseed, 4 oz (8 oz jar; grind a week at a time, keep ground flax in the fridge)</li>
+        <li data-k="raw-pepitas">Raw pepitas, 1 cup + your trail mix amount (8 oz jar)</li>
+        <li data-k="unsweetened-dried-papaya">Unsweetened dried papaya, 3 oz (8 oz jar; many brands are sugar-infused, check the label)</li>
+        <li data-k="dried-papaya-seeds">Dried papaya seeds, small bag</li>
+        <li data-k="green-or-brown-lentils">Green or brown lentils, ¾ cup</li>
+        <li data-k="quinoa">Quinoa, ⅓ cup</li>
+        <li data-k="brown-rice">Brown rice, 1¼ cups (32 oz jar)</li>
+        <li data-k="100-buckwheat-soba">100% buckwheat soba, 8 oz (many soba brands are mostly wheat, check the label)</li>
+      </ul>
+      <p class="sub">Trail mix restock, about 6½ cups</p>
+      <ul class="check">
+        <li data-k="walnuts">Walnuts, about 1 cup (32 oz jar)</li>
+        <li data-k="peanuts">Peanuts, about 1 cup (32 oz jar)</li>
+        <li data-k="sunflower-seeds">Sunflower seeds, about ¾ cup</li>
+        <li data-k="cashews">Cashews, about ¾ cup</li>
+        <li data-k="pistachios">Pistachios, about ¾ cup</li>
+        <li data-k="dried-blueberries">Dried blueberries, about ½ cup</li>
+        <li data-k="dried-cranberries">Dried cranberries, about ½ cup (look for juice-sweetened; most are sugar-sweetened)</li>
+      </ul>
       <p class="muted" style="font-size:.9rem;margin:.1rem 0 .3rem">Check your cabinet before you buy the spices, oils and baking items. Most of this block is a one-time pantry build, not a two-week grocery run.</p>
+      <p class="sub">Bulk spices</p>
       <ul class="check">
-        <li>Rolled oats, 1 lb</li>
-        <li>Chia seeds, 4 oz</li>
-        <li>Whole flaxseed, 4 oz (grind a week at a time; keep ground flax in the fridge)</li>
-        <li>Raw pepitas, 1 cup for the plan, plus your trail mix amount</li>
-        <li>Unsweetened dried papaya, 3 oz (many brands are sugar-infused; check the label)</li>
-        <li>Dried papaya seeds, small bag</li>
-        <li>Green or brown lentils, ¾ cup</li>
-        <li>Quinoa, ⅓ cup</li>
-        <li>Brown rice, 1¼ cups</li>
-        <li>100% buckwheat soba, 8 oz (many soba brands are mostly wheat)</li>
-        <li>Black beans, 2 × 15 oz cans</li>
-        <li>Chickpeas, 4 × 15 oz cans (2 for B2, 2 for fish nights)</li>
-        <li>Tomato paste, 6 oz can</li>
-        <li>White miso, small tub</li>
-        <li>Tamari, rice vinegar, toasted sesame oil, avocado oil, olive oil</li>
-        <li>Tahini, 1 jar</li>
-        <li>Pomegranate molasses, 1 bottle</li>
-        <li>Sesame seeds, arrowroot, black seed (nigella), baking powder, vanilla</li>
-        <li>Spices: cumin, smoked paprika, chili powder, Mexican oregano, coriander, turmeric, black pepper, garlic powder, ground cinnamon, cinnamon sticks, whole cloves</li>
-        <li>Trail mix restock: walnuts, peanuts, sunflower seeds, cashews, pistachios, dried blueberries, dried cranberries (about 6½ cups of mix per two weeks; most dried cranberries are sugar-sweetened, so look for juice-sweetened ones)</li>
+        <li data-k="cumin">Cumin, small bag</li>
+        <li data-k="smoked-paprika">Smoked paprika, small bag</li>
+        <li data-k="chili-powder">Chili powder, small bag</li>
+        <li data-k="mexican-oregano">Mexican oregano, small bag</li>
+        <li data-k="coriander">Coriander, small bag</li>
+        <li data-k="turmeric">Turmeric, small bag</li>
+        <li data-k="black-pepper">Black pepper, small bag</li>
+        <li data-k="garlic-powder">Garlic powder, small bag</li>
+        <li data-k="ground-cinnamon">Ground cinnamon, small bag</li>
+        <li data-k="cinnamon-sticks">Cinnamon sticks, small bag (ginger tea)</li>
+        <li data-k="whole-cloves">Whole cloves, small bag (ginger tea and evening tea)</li>
+        <li data-k="dried-epazote">Dried epazote, small bag (goes in the chili; fresh only shows up in summer)</li>
+        <li data-k="black-seed-nigella">Black seed (nigella), small bag</li>
+        <li data-k="sesame-seeds">Sesame seeds, small bag</li>
+        <li data-k="arrowroot">Arrowroot, small bag</li>
       </ul>
-      <p class="sub">Tea herbs (about a month's supply)</p>
+      <p class="sub">Bulk tea herbs, about a month</p>
       <ul class="check">
-        <li>Morning: gotu kola 2 oz, spearmint or peppermint 2 oz, tulsi 1 oz, oat tops or oat straw 1 oz</li>
-        <li>Evening: passionflower 2 oz, lemon balm 2 oz, chamomile 1 oz, lavender ½ oz</li>
-        <li>Matcha (optional)</li>
+        <li data-k="gotu-kola">Gotu kola, 2 oz (morning blend)</li>
+        <li data-k="spearmint-or-peppermint">Spearmint or peppermint, 2 oz (morning blend)</li>
+        <li data-k="tulsi">Tulsi, 1 oz (morning blend)</li>
+        <li data-k="oat-tops-or-oat-straw">Oat tops or oat straw, 1 oz (morning blend)</li>
+        <li data-k="passionflower">Passionflower, 2 oz (evening blend)</li>
+        <li data-k="lemon-balm">Lemon balm, 2 oz (evening blend)</li>
+        <li data-k="chamomile">Chamomile, 1 oz (evening blend)</li>
+        <li data-k="lavender">Lavender, ½ oz (evening blend)</li>
+        <li data-k="matcha">Matcha, optional</li>
+      </ul>
+      <p class="sub">Pantry</p>
+      <ul class="check">
+        <li data-k="black-beans">Black beans, 2 × 15 oz cans</li>
+        <li data-k="chickpeas">Chickpeas, 4 × 15 oz cans (2 for the B2 bowls, 2 for fish nights)</li>
+        <li data-k="tomato-paste">Tomato paste, 6 oz can</li>
+        <li data-k="white-miso">White miso, small tub</li>
+        <li data-k="tahini">Tahini, 1 jar</li>
+        <li data-k="pomegranate-molasses">Pomegranate molasses, 1 bottle</li>
+        <li data-k="tamari">Tamari, 1 bottle</li>
+        <li data-k="rice-vinegar">Rice vinegar, 1 bottle</li>
+        <li data-k="toasted-sesame-oil">Toasted sesame oil, 1 bottle</li>
+        <li data-k="avocado-oil">Avocado oil, 1 bottle</li>
+        <li data-k="olive-oil">Olive oil, 1 bottle</li>
+        <li data-k="baking-powder">Baking powder, 1 container</li>
+        <li data-k="vanilla-extract">Vanilla extract, 1 bottle</li>
+        <li data-k="honey">Honey, 1 jar</li>
+        <li data-k="stevia-extract">Stevia extract, 1 bottle (if you&#x27;re low)</li>
+        <li data-k="wide-mouth-pint-jars">Wide-mouth pint jars, 4 × 16 oz (for the overnight oats; straight-sided ones are freezer-safe)</li>
       </ul>
     </div>
 
     <div class="store" data-list="birite">
       <h3>Big trip: Bi-Rite, 3639 18th St <small>same day</small></h3>
       <ul class="check">
-        <li>Boneless skinless chicken thighs, 2¾ lb (freeze 1¼ lb labeled B2)</li>
-        <li>Ground turkey (93% lean), 1 lb</li>
-        <li>Wild salmon, 1 lb, skinned (ask the counter)</li>
-        <li>Fish nights: 3 portions of wild salmon or cod, about 5 oz each. Wrap each one and freeze flat.</li>
-        <li>Chicken breast, 1½ lb (freeze, labeled B1)</li>
-        <li>Raw peeled shrimp, 1¼ lb, frozen (keep frozen, labeled B3)</li>
-        <li>Chicken backs or wings for your broth base, if you make it with bones</li>
+        <li data-k="boneless-skinless-chicken-thighs">Boneless skinless chicken thighs, 2¾ lb (freeze 1¼ lb labeled B2)</li>
+        <li data-k="ground-turkey-93-lean">Ground turkey, 93% lean, 1 lb</li>
+        <li data-k="wild-salmon-skinned">Wild salmon, skinned, 1 lb (for the A3 salmon cakes; ask the counter to skin it)</li>
+        <li data-k="wild-salmon-or-cod-portions">Wild salmon or cod portions, 3 × about 5 oz (fish nights; wrap each and freeze flat)</li>
+        <li data-k="chicken-breast">Chicken breast, 1½ lb (freeze, labeled B1)</li>
+        <li data-k="raw-peeled-shrimp-frozen">Raw peeled shrimp, frozen, 1¼ lb (keep frozen, labeled B3)</li>
+        <li data-k="chicken-backs-or-wings">Chicken backs or wings, optional (only if you make your broth base with bones)</li>
       </ul>
       <p class="muted">Ask which farms the chicken comes from. "Pasture-raised" with a named farm tells you more than "free-range."</p>
     </div>
@@ -370,29 +434,29 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
     <div class="store" data-list="quick">
       <h3>Quick stop: Rainbow <small>before Week B prep</small></h3>
       <ul class="check">
-        <li>Oyster mushrooms, 12 oz</li>
-        <li>Shiitake, 8 oz</li>
-        <li>Kale, 1 large bunch (about 6 oz)</li>
-        <li>Broccoli, 2 crowns: 8 oz for B3, the rest for fish nights this week</li>
-        <li>Siggi's vanilla cups (5.3 oz), 6</li>
-        <li>2% cottage cheese, 1 single-serve cup (Week B muffins)</li>
-        <li>Scallions, 1 bunch</li>
-        <li>Fresh ginger, a 3-inch piece</li>
-        <li>Broth herbs: oregano and thyme, 1 pack each</li>
-        <li>Plain 2% Greek yogurt, 16 oz tub</li>
-        <li>Labneh, 8–10 oz (or strain 1 cup Greek yogurt overnight)</li>
-        <li>2% milk, ½ gallon + 1 pint</li>
+        <li data-k="oyster-mushrooms">Oyster mushrooms, 12 oz</li>
+        <li data-k="shiitake-mushrooms">Shiitake mushrooms, 8 oz</li>
+        <li data-k="kale">Kale, 1 large bunch, about 6 oz</li>
+        <li data-k="broccoli">Broccoli, 2 crowns (8 oz for B3, the rest for fish nights)</li>
+        <li data-k="scallions">Scallions, 1 bunch</li>
+        <li data-k="fresh-ginger">Fresh ginger, 3-inch piece</li>
+        <li data-k="oregano">Oregano, 1 pack (broth herbs)</li>
+        <li data-k="thyme">Thyme, 1 pack (broth herbs)</li>
+        <li data-k="siggi-s-vanilla-cups">Siggi&#x27;s vanilla cups, 6 × 5.3 oz</li>
+        <li data-k="2-cottage-cheese">2% cottage cheese, 1 single-serve cup (Week B egg muffins)</li>
+        <li data-k="plain-2-greek-yogurt">Plain 2% Greek yogurt, 16 oz tub</li>
+        <li data-k="labneh">Labneh, 8–10 oz (or strain 1 cup Greek yogurt overnight)</li>
+        <li data-k="2-milk">2% milk, ½ gallon + 1 pint</li>
       </ul>
     </div>
 
     <div class="store" data-list="once">
       <h3>Once a season</h3>
       <ul class="check">
-        <li>Nigerian dried ginger slices: The African Outlet (Bayview) or Man Must Wak (Oakland). Call ahead, or order online.</li>
-        <li>Sea moss gel, when you run low</li>
+        <li data-k="nigerian-ginger">Nigerian dried ginger slices, about ½ lb (The African Outlet in Bayview or Man Must Wak in Oakland; call ahead, or order online)</li>
       </ul>
     </div>
-  </div>
+    </div>
   </section>
 
   <section id="recipes" role="tabpanel" hidden>
@@ -400,7 +464,8 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
     <p>Each main cooks in 45 minutes or less. Nutrition is per serving, including its sauce.</p>
     <div class="note"><b>Garlic, every time:</b> mince it first and let it sit 10 minutes before heat or acid touches it. Sauces with raw garlic (tahini, labneh, pesto) stay cold and go on after reheating, never before.</div>
 
-    <h3>Week A</h3>
+    <h3>Week A: everything you make on prep Sunday</h3>
+    <p class="muted">Three mains, four oats jars, twelve egg muffins, the pesto cubes (enough for both weeks) and the vinaigrette.</p>
     <details><summary>A1: Sheet-pan chicken, shiitake, broccoli &amp; sweet potato</summary>
       <p class="macro">5 servings. about 485 kcal, 37 g protein, 11 g fiber. 40 minutes</p>
       <ul>
@@ -477,7 +542,49 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
       </ol>
     </details>
 
-    <h3>Week B</h3>
+    <details><summary>Overnight oats jars, Days 4–7</summary>
+      <p class="macro">Per jar. about 380 kcal, 17 g protein, 11 g fiber. 4 wide-mouth pint jars, for Days 4–7</p>
+      <ul>
+        <li>½ cup rolled oats</li>
+        <li>¼ cup Greek yogurt</li>
+        <li>⅓ cup 2% milk</li>
+        <li>1 tbsp chia, 1 tbsp ground flax</li>
+        <li>1 tsp honey (or stevia)</li>
+        <li>1 tbsp chopped unsweetened dried papaya</li>
+        <li>½ tsp cinnamon</li>
+      </ul>
+      <p>Stir, lid, and freeze all 4. Move one to the fridge the night before; it thaws overnight.</p>
+    </details>
+
+    <details><summary>Egg muffins, Week A: spinach &amp; cremini</summary>
+      <p class="macro">Makes 12. 2 per serving. about 172 kcal, 14 g protein. 350°F for 20–22 minutes</p>
+      <ul>
+        <li>10 eggs and ½ cup 2% cottage cheese, whisked</li>
+        <li>5 oz spinach, 6 oz cremini, ½ onion, all chopped</li>
+        <li>1 tbsp olive oil, 1 tsp black seed, salt, pepper</li>
+      </ul>
+      <p>Sauté the filling in oil for 5 minutes, divide it among 12 greased cups, pour in the egg mixture, and top with black seed. Grind papaya seed over them when you eat them. Day 7's snack is a Siggi's instead.</p>
+    </details>
+
+    <details><summary>Pepita-cilantro pesto, cubes for both weeks</summary>
+      <p class="macro">About 16 tablespoons. 64 kcal per tablespoon</p>
+      <ul>
+        <li>½ cup raw pepitas</li>
+        <li>2 packed cups cilantro (stems are fine)</li>
+        <li>3 garlic cloves, rested 10 minutes</li>
+        <li>⅓ cup olive oil</li>
+        <li>2 tbsp lime or lemon juice</li>
+        <li>½ tsp salt, splash of water</li>
+      </ul>
+      <p>Blend until smooth and freeze in tablespoon cubes. That's 5 cubes for the A2 chili, 5 for the B2 bowls, plus a few spares. Garlic in oil must stay frozen or refrigerated, never at room temperature.</p>
+    </details>
+
+    <details><summary>Pomegranate vinaigrette</summary>
+      <p>Shake 1 tbsp pomegranate molasses with 3 tbsp olive oil and a pinch of salt. It has no garlic, so it keeps in the fridge for two weeks. Use it on the A3 cauliflower; any extra is good on egg muffins.</p>
+    </details>
+
+    <h3>Week B: everything you make on prep Sunday</h3>
+    <p class="muted">Three mains, eight oat cups and twelve egg muffins. No pesto this week; pull 5 cubes from the Week A batch.</p>
     <details><summary>B1: Miso-ginger chicken, oyster mushrooms &amp; cabbage over brown rice</summary>
       <p class="macro">5 servings. about 490 kcal, 41 g protein, 8 g fiber. 45 minutes</p>
       <ul>
@@ -549,22 +656,7 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
       </ol>
     </details>
 
-    <h3>Breakfasts, snacks and extras</h3>
-    <details><summary>Overnight oats jars (Week A)</summary>
-      <p class="macro">Per jar. about 380 kcal, 17 g protein, 11 g fiber. 4 wide-mouth pint jars, for Days 4–7</p>
-      <ul>
-        <li>½ cup rolled oats</li>
-        <li>¼ cup Greek yogurt</li>
-        <li>⅓ cup 2% milk</li>
-        <li>1 tbsp chia, 1 tbsp ground flax</li>
-        <li>1 tsp honey (or stevia)</li>
-        <li>1 tbsp chopped unsweetened dried papaya</li>
-        <li>½ tsp cinnamon</li>
-      </ul>
-      <p>Stir, lid, and freeze all 4. Move one to the fridge the night before; it thaws overnight.</p>
-    </details>
-
-    <details><summary>Baked oat cups (Week B)</summary>
+    <details><summary>Baked oat cups, Days 4–7</summary>
       <p class="macro">Makes 8. 2 cups per serving, for Days 4–7. about 365 kcal, 17 g protein, 6 g fiber. 350°F for 20–22 minutes</p>
       <ul>
         <li>2 cups rolled oats</li>
@@ -580,6 +672,17 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
       <p>Mix everything, divide among 8 greased muffin cups, and bake. Freeze them in pairs. Eat cold, or warm them for 30–45 seconds. Baking reduces the pepitas' cucurbitacin, per your guide; your raw pepitas come from the pesto and trail mix.</p>
     </details>
 
+    <details><summary>Egg muffins, Week B: kale &amp; scallion</summary>
+      <p class="macro">Makes 12. 2 per serving. about 172 kcal, 14 g protein. 350°F for 20–22 minutes</p>
+      <ul>
+        <li>10 eggs and ½ cup 2% cottage cheese, whisked</li>
+        <li>6 oz kale (ribs out, chopped), 2 scallions, ½ onion</li>
+        <li>1 tbsp olive oil, 1 tsp black seed, salt, pepper</li>
+      </ul>
+      <p>Sauté the filling in oil for 5 minutes, divide it among 12 greased cups, pour in the egg mixture, and top with black seed. Grind papaya seed over them when you eat them. Day 7's snack is a Siggi's instead.</p>
+    </details>
+
+    <h3>Any day, no prep</h3>
     <details><summary>Gym breakfast (Days 1–3, zero prep)</summary>
       <p class="macro">about 540 kcal, 28 g protein, 8 g fiber. Nothing to prep</p>
       <ul>
@@ -607,34 +710,6 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
         <li>Squeeze the lemon over everything.</li>
       </ol>
       <p>Move a portion to the fridge the night before if you think you'll want it. If you forget, cook it from frozen. The dinner container you didn't eat goes back in the freezer as a backup for a triple day or a Sunday you skip prep. The other half-can of chickpeas keeps 3–4 days in the fridge.</p>
-    </details>
-
-    <details><summary>Egg muffins (both weeks)</summary>
-      <p class="macro">Makes 12. 2 per serving. about 172 kcal, 14 g protein. 350°F for 20–22 minutes</p>
-      <ul>
-        <li>10 eggs and ½ cup 2% cottage cheese, whisked</li>
-        <li>Week A filling: 5 oz spinach, 6 oz cremini, ½ onion</li>
-        <li>Week B filling: 6 oz kale, 2 scallions, ½ onion</li>
-        <li>1 tbsp olive oil, 1 tsp black seed, salt, pepper</li>
-      </ul>
-      <p>Sauté the filling in oil for 5 minutes, divide it among 12 greased cups, pour in the egg mixture, and top with black seed. Grind papaya seed over them when you eat them. Day 7's snack is a Siggi's instead.</p>
-    </details>
-
-    <details><summary>Pepita-cilantro pesto (Week A Sunday)</summary>
-      <p class="macro">About 16 tablespoons. 64 kcal per tablespoon</p>
-      <ul>
-        <li>½ cup raw pepitas</li>
-        <li>2 packed cups cilantro (stems are fine)</li>
-        <li>3 garlic cloves, rested 10 minutes</li>
-        <li>⅓ cup olive oil</li>
-        <li>2 tbsp lime or lemon juice</li>
-        <li>½ tsp salt, splash of water</li>
-      </ul>
-      <p>Blend until smooth and freeze in tablespoon cubes. That's 5 cubes for the A2 chili, 5 for the B2 bowls, plus a few spares. Garlic in oil must stay frozen or refrigerated, never at room temperature.</p>
-    </details>
-
-    <details><summary>Pomegranate vinaigrette (Week A Sunday)</summary>
-      <p>Shake 1 tbsp pomegranate molasses with 3 tbsp olive oil and a pinch of salt. It has no garlic, so it keeps in the fridge for two weeks. Use it on the A3 cauliflower; any extra is good on egg muffins.</p>
     </details>
 
     <details><summary>Optional extras</summary>
@@ -811,15 +886,15 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
 (function () {
   'use strict';
 
-  // ================= CONFIG (fill these in after Supabase setup) =================
+  // ================= CONFIG (René's project; these are safe to ship in the page) =================
   var CONFIG = {
     SUPABASE_URL: 'https://cckgtyrqrrxypimihogb.supabase.co',
-    SUPABASE_KEY: 'sb_publishable_3R-5sylhDacDBCOJiuxEeg_-XGurFq8',
+    SUPABASE_KEY: 'sb_publishable_3R-5sylhDacDBCOJiuxEeg_-XGurFq8',   // publishable key: public by design, RLS protects the rows
     VAPID_PUBLIC_KEY: 'BEv98_b7frrCHWFtSmd_sfR9d4SPio0_iAlOzdiApL1TtGPkdPEH6bCoxK5-emNE1NscIjaDl0yi2teiHwWc3Ts',
-    PLAN_START: '2026-10-05',  // default Week A, Day 1 (a Monday)
+    PLAN_START: '2026-10-05',  // Week A, Day 1 (a Monday); also changeable under Settings
     REMINDER_FUNCTION: 'meal-reminders'
   };
-  var APP_VERSION = '1.1.2';
+  var APP_VERSION = '1.2.1';
 
   // ================= utils =================
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -1110,7 +1185,7 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
       if (!Sync.user) throw new Error('Sign in first so the reminder knows where to go.');
       if (!CONFIG.VAPID_PUBLIC_KEY) throw new Error('Add your VAPID public key to CONFIG first.');
       var perm = await Notification.requestPermission();
-      if (perm !== 'granted') throw new Error('Notifications are blocked. Allow them in Settings > Notifications > Meal Prep.');
+      if (perm !== 'granted') throw new Error('Notifications are blocked. Allow them in Settings > Notifications > My Meal Plan.');
       var reg = await navigator.serviceWorker.ready;
       var sub = await reg.pushManager.getSubscription();
       if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlB64ToUint8Array(CONFIG.VAPID_PUBLIC_KEY) });
@@ -1367,7 +1442,8 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
       var n = 0;
       lists.forEach(function (ul) {
         $$('li', ul).forEach(function (li) {
-          var key = 'shop:' + name + '_' + (n++);
+          var key = 'shop:' + name + ':' + (li.dataset.k || ('_' + n));
+          n++;
           li.innerHTML = '<label><input type="checkbox" data-kv="' + key + '"><span>' + li.innerHTML + '</span></label>';
         });
       });
@@ -1421,6 +1497,9 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
     if (!configured()) {
       $('#acctOut').innerHTML = '<p class="status bad">Sync isn\'t set up yet. Fill in SUPABASE_URL and SUPABASE_KEY in the CONFIG block of index.html.</p>';
       so.hidden = true; si.hidden = true;
+    } else if (!Sync.client) {
+      $('#acctOut').innerHTML = '<p class="status bad">The Supabase library didn\'t load, so sync can\'t start. Check that the file vendor/supabase.js exists in the repo, with the folder name in lowercase, then reload.</p>';
+      so.hidden = true; si.hidden = true;
     } else if (Sync.user) {
       $('#acctOut').innerHTML = '';
       so.hidden = true; si.hidden = false;
@@ -1433,7 +1512,7 @@ details li.seasonal::before{content:"Season note: ";font-weight:700}
     var t = targets();
     ['k', 'p', 'f'].forEach(function (z) { var el = $('#t' + z.toUpperCase()); if (el && document.activeElement !== el) el.value = t[z]; });
     var ps = $('#planStart'); if (ps && document.activeElement !== ps) ps.value = planStartKey();
-    $('#versionLine').textContent = 'Meal Prep ' + APP_VERSION;
+    $('#versionLine').textContent = 'My Meal Plan ' + APP_VERSION;
     renderPushStatus();
   }
 

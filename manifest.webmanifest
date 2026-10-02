@@ -1,6 +1,6 @@
 {
-  "name": "Meal Prep",
-  "short_name": "Meal Prep",
+  "name": "My Meal Plan",
+  "short_name": "My Meal Plan",
   "description": "Two-week meal prep plan, bag checklists, food log and nightly reminders.",
   "start_url": "./",
   "scope": "./",
