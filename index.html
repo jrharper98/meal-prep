@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meal Prep</title>
+<meta name="theme-color" content="#F3F5F0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131916" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Meal Prep">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,750&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3F5F0;--card:#FFFFFF;--ink:#1D2922;--muted:#56645C;--line:#D3DBD4;
+  --herb:#3F6B50;--herb-t:#E1EDE4;--gym:#9A6500;--gym-t:#FAEFD6;
+  --retail:#8B3A5E;--retail-t:#F5E4EC;--pet:#7A5634;--pet-t:#F1E7DC;
+  --ice:#2F6480;--ice-t:#E0ECF3;--warn:#8A4B12;--warn-t:#FBEBDD;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131916;--card:#1B231F;--ink:#E5ECE7;--muted:#A3B1A8;--line:#2D3932;
+    --herb:#8BBB9B;--herb-t:#1F2F27;--gym:#E4B356;--gym-t:#33290F;
+    --retail:#DB8FB2;--retail-t:#3A2230;--pet:#D3A983;--pet-t:#33271C;
+    --ice:#89BBD7;--ice-t:#1A2C36;--warn:#E8A56B;--warn-t:#35251A;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131916;--card:#1B231F;--ink:#E5ECE7;--muted:#A3B1A8;--line:#2D3932;
+  --herb:#8BBB9B;--herb-t:#1F2F27;--gym:#E4B356;--gym-t:#33290F;
+  --retail:#DB8FB2;--retail-t:#3A2230;--pet:#D3A983;--pet-t:#33271C;
+  --ice:#89BBD7;--ice-t:#1A2C36;--warn:#E8A56B;--warn-t:#35251A;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.55;
+  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+.wrap{max-width:46rem;margin:0 auto;padding:calc(1rem + env(safe-area-inset-top)) 1.1rem calc(4rem + env(safe-area-inset-bottom))}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0}
+h1{font-size:clamp(1.9rem,6vw,2.6rem);font-weight:750;letter-spacing:-.02em}
+h2{font-size:1.6rem;font-weight:750;margin:2rem 0 .6rem;letter-spacing:-.01em}
+h3{font-size:1.15rem;font-weight:600;margin:1.4rem 0 .4rem}
+p{margin:.5rem 0}
+a{color:var(--herb)}
+small,.muted{color:var(--muted)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--herb);outline-offset:2px;border-radius:6px}
+
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.sync{font-size:.85rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.15rem .7rem;background:var(--card);cursor:pointer}
+.sync.ok{color:var(--herb)} .sync.warn{color:var(--warn)}
+
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);margin:.6rem -1.1rem 0;padding:.5rem 1.1rem;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+nav.tabs button{background:none;border:0;padding:.45rem .8rem;border-radius:999px;cursor:pointer;color:var(--muted);font-weight:700}
+nav.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+section[hidden]{display:none}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem;margin-top:1rem}
+.row{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.35rem 0 .8rem}
+.row .lbl{width:100%;font-weight:700;font-size:.95rem}
+.chip{border:1.5px solid var(--line);background:transparent;border-radius:999px;padding:.35rem .8rem;cursor:pointer;min-width:2.5rem}
+.chip[aria-pressed="true"]{background:var(--herb);border-color:var(--herb);color:var(--card)}
+.chip.gym[aria-pressed="true"]{background:var(--gym);border-color:var(--gym)}
+.chip.retail[aria-pressed="true"]{background:var(--retail);border-color:var(--retail)}
+.chip.pet[aria-pressed="true"]{background:var(--pet);border-color:var(--pet)}
+.dateline{font-size:.95rem;color:var(--muted);margin:0 0 .6rem}
+.btn{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:.4rem .9rem;cursor:pointer;font-weight:700}
+.btn.primary{background:var(--herb);border-color:var(--herb);color:var(--card)}
+.btn:disabled{opacity:.5;cursor:default}
+.linkbtn{background:none;border:0;color:var(--herb);font-weight:700;cursor:pointer;padding:0;text-decoration:underline}
+
+.tonight{background:var(--ice-t);border-left:5px solid var(--ice);border-radius:10px;padding:.8rem 1rem;margin:1rem 0}
+.tonight h3{margin:0 0 .3rem;color:var(--ice)}
+
+.bags{display:grid;gap:.8rem;margin:1rem 0}
+@media(min-width:40rem){.bags{grid-template-columns:1fr 1fr}}
+.bag{border-radius:12px;padding:.8rem 1rem;border-left:6px solid}
+.bag h3{margin:0 0 .35rem}
+.bag.home{background:var(--herb-t);border-color:var(--herb)} .bag.home h3{color:var(--herb)}
+.bag.gym{background:var(--gym-t);border-color:var(--gym)} .bag.gym h3{color:var(--gym)}
+.bag.retail{background:var(--retail-t);border-color:var(--retail)} .bag.retail h3{color:var(--retail)}
+.bag.pet{background:var(--pet-t);border-color:var(--pet)} .bag.pet h3{color:var(--pet)}
+ul.check,ul.plainlist{list-style:none;padding:0;margin:0}
+ul.check li,ul.plainlist li{margin:.2rem 0}
+ul.plainlist li::before{content:"–  ";color:var(--muted)}
+ul.check label{display:flex;gap:.55rem;align-items:flex-start;cursor:pointer}
+ul.check input{width:1.15rem;height:1.15rem;margin-top:.22rem;flex:none;accent-color:var(--herb)}
+ul.check input:checked + span{text-decoration:line-through;color:var(--muted)}
+
+ol.timeline{list-style:none;padding:0;margin:.5rem 0;border-left:2px solid var(--line)}
+ol.timeline li{position:relative;padding:.3rem 0 .55rem 1.1rem}
+ol.timeline li::before{content:"";position:absolute;left:-7px;top:.72rem;width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--muted)}
+ol.timeline li.gym::before{border-color:var(--gym);background:var(--gym)}
+ol.timeline li.retail::before{border-color:var(--retail);background:var(--retail)}
+ol.timeline li.home::before{border-color:var(--herb);background:var(--herb)}
+ol.timeline li.pet::before{border-color:var(--pet);background:var(--pet)}
+.when{font-weight:700}
+.where{font-size:.85rem;color:var(--muted)}
+
+/* log */
+.meters{display:grid;gap:.6rem;margin:.4rem 0 1rem}
+.meter .lab{display:flex;justify-content:space-between;font-size:.92rem}
+.meter .lab b{font-family:var(--display);font-size:1.25rem}
+.bar{height:10px;border-radius:999px;background:var(--line);overflow:hidden}
+.bar span{display:block;height:100%;background:var(--herb);border-radius:999px;transition:width .25s ease}
+.bar.over span{background:var(--warn)}
+@media (prefers-reduced-motion: reduce){.bar span{transition:none}}
+.logrow{display:flex;justify-content:space-between;gap:.8rem;align-items:flex-start;padding:.35rem 0;border-bottom:1px solid var(--line)}
+.logrow:last-child{border-bottom:0}
+.logrow .nums{font-size:.85rem;color:var(--muted);white-space:nowrap;text-align:right}
+.stepper{display:flex;align-items:center;gap:.4rem}
+.stepper button{width:2rem;height:2rem;border-radius:50%;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-weight:700}
+.addform{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin-top:.5rem}
+.addform .full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:.2rem;font-size:.85rem;color:var(--muted)}
+.field input,.field select{width:100%;min-width:0;padding:.5rem .6rem;border:1.5px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font-size:1rem}
+
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:40rem;font-size:.93rem}
+th,td{text-align:left;padding:.55rem .65rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-weight:600;background:var(--herb-t)}
+tr:last-child td{border-bottom:0}
+table.small{min-width:0}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:.05rem .45rem;border-radius:6px}
+.tag.fridge{background:var(--herb-t);color:var(--herb)}
+.tag.freezer{background:var(--ice-t);color:var(--ice)}
+
+.note{background:var(--warn-t);border-left:5px solid var(--warn);border-radius:10px;padding:.7rem 1rem;margin:1rem 0}
+.plain{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;margin:.8rem 0}
+ol.steps{padding-left:1.4rem;margin:.4rem 0}
+ol.steps li{margin:.35rem 0}
+.t{font-weight:700;font-variant-numeric:tabular-nums}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:.6rem 0;padding:0 1rem}
+details[open]{padding-bottom:.8rem}
+summary{cursor:pointer;padding:.8rem 0;font-family:var(--display);font-weight:600;font-size:1.08rem}
+.macro{font-size:.9rem;color:var(--muted);margin:-.3rem 0 .4rem}
+details ul{padding-left:1.2rem;margin:.3rem 0}
+.store{margin-top:1.2rem}
+.store h3{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
+.store h3 small{font-family:var(--body);font-weight:400;font-size:.85rem}
+.sub{font-weight:700;margin:.8rem 0 .2rem;font-size:.95rem}
+.status{font-size:.92rem;margin:.4rem 0}
+.status.bad{color:var(--warn)}
+.seasonal{color:var(--warn)}
+details li.seasonal{list-style:none;margin-left:-1rem}
+details li.seasonal::before{content:"Season note: ";font-weight:700}
+
+/* iPad and wider */
+@media (min-width: 900px){
+  .wrap{max-width:74rem;padding-left:2rem;padding-right:2rem}
+  nav.tabs{margin-left:-2rem;margin-right:-2rem;padding-left:2rem;padding-right:2rem}
+  .today-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:1.6rem;align-items:start}
+  .bags{grid-template-columns:1fr}
+  #shop .stores{display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;align-items:start}
+  #recipes{max-width:56rem}
+  .settings-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;align-items:start}
+  #prep, #drinks, #weeks{max-width:52rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Meal Prep</h1>
+    <button class="sync" id="syncBadge" type="button">Local only</button>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="App sections">
+    <button role="tab" data-tab="today" aria-selected="true">Today</button>
+    <button role="tab" data-tab="weeks" aria-selected="false">Two weeks</button>
+    <button role="tab" data-tab="prep" aria-selected="false">Sunday prep</button>
+    <button role="tab" data-tab="shop" aria-selected="false">Shopping</button>
+    <button role="tab" data-tab="recipes" aria-selected="false">Recipes</button>
+    <button role="tab" data-tab="swaps" aria-selected="false">Swaps</button>
+    <button role="tab" data-tab="drinks" aria-selected="false">Tea, broth &amp; stash</button>
+    <button role="tab" data-tab="settings" aria-selected="false">Settings</button>
+  </nav>
+
+  <section id="today" role="tabpanel">
+    <div class="today-grid">
+      <div class="col-left">
+        <div class="card">
+          <p class="dateline" id="dateline"></p>
+          <div class="row" role="group" aria-label="Week">
+            <span class="lbl">Week</span>
+            <button class="chip" data-week="A">A</button>
+            <button class="chip" data-week="B">B</button>
+          </div>
+          <div class="row" role="group" aria-label="Day">
+            <span class="lbl">Day</span>
+            <button class="chip" data-day="1">1 Mon</button>
+            <button class="chip" data-day="2">2 Tue</button>
+            <button class="chip" data-day="3">3 Wed</button>
+            <button class="chip" data-day="4">4 Thu</button>
+            <button class="chip" data-day="5">5 Fri</button>
+            <button class="chip" data-day="6">6 Sat</button>
+            <button class="chip" data-day="7">7 Sun</button>
+          </div>
+          <div class="row" role="group" aria-label="Jobs">
+            <span class="lbl">Jobs</span>
+            <button class="chip gym" data-job="gym">Gym</button>
+            <button class="chip retail" data-job="retail">Retail</button>
+            <button class="chip pet" data-job="pet">Pet sitting</button>
+          </div>
+          <div class="row" role="group" aria-label="Dinner">
+            <span class="lbl">Dinner</span>
+            <button class="chip" data-dinner="prep">Prepped container</button>
+            <button class="chip" data-dinner="fish">Fish at home</button>
+          </div>
+        </div>
+        <div id="tonightBox"></div>
+        <div id="bagsBox"></div>
+      </div>
+      <div class="col-right">
+        <div id="timelineBox"></div>
+        <div id="logBox"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="weeks" role="tabpanel" hidden>
+    <h2>The rotation</h2>
+    <p>Day 1 is Monday. Days 1–3 live in the fridge; days 4–7 live in the freezer until the night before. Label every lid with week, day and meal, like "Wk A D4 lunch", so day numbers don't get mixed up with recipe codes (A1, B2…).</p>
+    <h3>Week A</h3>
+    <div class="scroll"><table id="tblA"></table></div>
+    <h3>Week B</h3>
+    <div class="scroll"><table id="tblB"></table></div>
+    <div class="plain">
+      <p><b>About the numbers.</b> Totals include your shake (1 scoop Ascent chocolate + 1 cup 2% milk: 242 kcal, 33 g protein), ¼ cup kimchi, one cup of broth, one cup of ginger tea with honey, and a teaspoon of honey in your focus tea. Days 1–3 use the gym breakfast (Siggi's vanilla, ½ cup trail mix, 1 tbsp chia). Days 4–7 use the prepped breakfast plus ¼ cup trail mix in the afternoon. They're estimates from USDA values, so expect about ±10% depending on brands and portions.</p>
+      <p>Protein lands around 150–165 g, above your 120 g floor. If you'd rather sit closer to 120, the easiest swap is less meat in each batch and more beans or lentils.</p>
+      <p>Fiber runs about 27–42 g; the shrimp stir-fry days in Week B are the low end. If that's a jump from what you eat now, drink extra water the first week or two; bloating usually settles as your gut adjusts.</p>
+    </div>
+  </section>
+
+  <section id="prep" role="tabpanel" hidden>
+    <h2>Sunday prep</h2>
+    <p>Two cooking sessions alternate: Week A prep follows the big shopping trip, Week B prep follows the quick stop. Your broth base and ginger tea can simmer on a back burner during either one.</p>
+
+    <h3>The rule for every container</h3>
+    <ul>
+      <li>Days 1–3: fridge. Days 4–7: freezer.</li>
+      <li>Sauce cups (tahini, dill yogurt, labneh) go wherever their meal goes.</li>
+      <li>Cool food fast before lidding: spread it on sheet pans for 20 minutes, then into the fridge.</li>
+      <li>Glass in the freezer: straight-sided jars with about 1½ inches of headspace.</li>
+    </ul>
+
+    <h3>Week A prep, about 2 hours 20 minutes</h3>
+    <p class="muted">Makes 14 mains (5 × A1, 5 × A2, 4 × A3), 4 oats jars (Days 4–7), 12 egg muffins, a batch of pesto, and the vinaigrette.</p>
+    <ol class="steps">
+      <li><span class="t">0:00</span> Mince all the garlic (11 cloves) and let it sit 10 minutes. Oven to 425°F. Start ⅓ cup quinoa.</li>
+      <li><span class="t">0:05</span> Cube sweet potatoes, toss with oil and spices, into the oven for a 10-minute head start. Season the chicken thighs; trim the shiitake and broccoli.</li>
+      <li><span class="t">0:15</span> Chicken and shiitake go in on a second pan. Add broccoli to the sweet potato pan. Start the chili on the stove.</li>
+      <li><span class="t">0:40</span> A1 pans out. Cauliflower goes in. Lentils and beans should already be simmering in the chili.</li>
+      <li><span class="t">0:45</span> Chop the salmon and mix the cakes with the cooled quinoa. Let the flax bind for 5 minutes while you blend the pesto and whisk the tahini sauce, dill yogurt and vinaigrette.</li>
+      <li><span class="t">0:55</span> Salmon cakes into the oven. Sprinkle black seed on the cauliflower. Chili comes off the heat when the lentils are tender.</li>
+      <li><span class="t">1:15</span> Cakes and cauliflower out. Drizzle vinaigrette on the cauliflower. Drop the oven to 350°F with the door cracked for a minute.</li>
+      <li><span class="t">1:20</span> Sauté the egg muffin vegetables, whisk the eggs, fill the tin, bake 20–22 minutes. Assemble the 4 oats jars while they bake.</li>
+      <li><span class="t">1:45</span> Everything cools on sheet pans. Spoon pesto into an ice cube tray (1 tablespoon per cube) and freeze.</li>
+      <li><span class="t">1:55</span> Portion and label. Fridge: 6 mains, 6 muffins, sauce cups for days 1–3. Freezer: 8 mains, 4 oats jars, 6 muffins, sauce cups for days 4–7, pesto tray.</li>
+      <li><span class="t">2:20</span> Restock the work stash bins (list under Tea, broth &amp; stash).</li>
+    </ol>
+
+    <h3>Week B prep, about 1 hour 50 minutes</h3>
+    <p class="muted">Makes 14 mains (5 × B1, 5 × B2, 4 × B3), 8 baked oat cups (Days 4–7), and 12 egg muffins. Chicken moves from freezer to fridge on Friday night; thaw the shrimp in cold water while you start.</p>
+    <ol class="steps">
+      <li><span class="t">0:00</span> Mince all the garlic (8 cloves) and let it sit. Oven to 425°F. Big pot of water on to boil for the rice.</li>
+      <li><span class="t">0:05</span> Marinate the chicken breast. Season the thighs. Two B2 pans into the oven: chicken with onion, and carrots with chickpeas.</li>
+      <li><span class="t">0:10</span> Rice into the boiling water, pasta-style, for 30 minutes.</li>
+      <li><span class="t">0:15</span> Cook B1 in a big skillet: mushrooms, then chicken, then cabbage.</li>
+      <li><span class="t">0:35</span> B2 pans out; drizzle pomegranate molasses. Drain the rice, lid it for 10 minutes. Oven to 350°F.</li>
+      <li><span class="t">0:40</span> Mix the oat cups and bake 22–25 minutes. Put the soba water on.</li>
+      <li><span class="t">0:45</span> Cook the soba one minute short and rinse it cold. Cook B3 in the wok.</li>
+      <li><span class="t">1:05</span> Oat cups out, egg muffins in (20–22 minutes). Finish B1 with the miso-sesame mix off the heat. Stir the garlic into the labneh.</li>
+      <li><span class="t">1:15</span> Spread the rice on a tray to cool quickly. Cooked rice should be in the fridge within about an hour.</li>
+      <li><span class="t">1:30</span> Portion and label. Fridge: 6 mains, 6 muffins, sauce cups for days 1–3. Freezer: 8 mains, 8 oat cups, 6 muffins, sauce cups for days 4–7. Pull 5 pesto cubes into a bag labeled B2.</li>
+    </ol>
+  </section>
+
+  <section id="shop" role="tabpanel" hidden>
+    <h2>Shopping</h2>
+    <p>One big trip every other Sunday (Rainbow, then Bi-Rite on 18th St), and a quick Rainbow-only stop on the Sundays in between. Quantities are for the plan itself; add whatever else you normally buy.</p>
+    <p><button class="btn" id="clearShop">Clear all checks</button></p>
+
+    <div class="stores">
+    <div class="store" data-list="big">
+      <h3>Big trip: Rainbow <small>before Week A prep</small></h3>
+      <p class="sub">Produce</p>
+      <ul class="check">
+        <li>Sweet potatoes, 1½ lb (about 2 medium)</li>
+        <li>Broccoli, 1½ lb, plus 1 crown for fish nights this week</li>
+        <li>Cauliflower, 2 heads</li>
+        <li>Shiitake, 12 oz (for A1)</li>
+        <li>Cremini, 1 lb 10 oz</li>
+        <li>Spinach, 5 oz</li>
+        <li>Cabbage, 1 large head (about 3 lb, keeps 2+ weeks; the extra is for fish nights)</li>
+        <li>Carrots, 3 lb bag (keeps 2 weeks)</li>
+        <li>Onions, 4</li>
+        <li>Garlic, 3 heads</li>
+        <li>Lemons, 6</li>
+        <li>Limes, 3</li>
+        <li>Cilantro, 2 bunches</li>
+        <li>Dill, 1 bunch (parsley if they're out)</li>
+        <li>Dried epazote, small bag from bulk spices (fresh only shows up in summer)</li>
+        <li>Broth herbs: oregano and thyme, 1 pack each; rosemary and sage for your base</li>
+        <li class="seasonal">In season only: 2–3 bell peppers (about July to November), an avocado (spring to early fall), winter squash (fall and winter)</li>
+      </ul>
+      <p class="sub">Dairy, eggs, fermented</p>
+      <ul class="check">
+        <li>Eggs, 2 dozen</li>
+        <li>Plain 2% Greek yogurt, 16 oz tub</li>
+        <li>Siggi's vanilla cups (5.3 oz), 6: three for gym breakfasts, plus Day 7 and spares (buy the next 6 on the quick stop so dates stay fresh)</li>
+        <li>2% milk, ½ gallon + 1 pint</li>
+        <li>2% cottage cheese, 1 single-serve cup (Week A muffins)</li>
+        <li>Refrigerated, unpasteurized kimchi, 2 × 16 oz jars</li>
+      </ul>
+      <p class="sub">Bulk and pantry</p>
+      <p class="muted" style="font-size:.9rem;margin:.1rem 0 .3rem">Check your cabinet before you buy the spices, oils and baking items. Most of this block is a one-time pantry build, not a two-week grocery run.</p>
+      <ul class="check">
+        <li>Rolled oats, 1 lb</li>
+        <li>Chia seeds, 4 oz</li>
+        <li>Whole flaxseed, 4 oz (grind a week at a time; keep ground flax in the fridge)</li>
+        <li>Raw pepitas, 1 cup for the plan, plus your trail mix amount</li>
+        <li>Unsweetened dried papaya, 3 oz (many brands are sugar-infused; check the label)</li>
+        <li>Dried papaya seeds, small bag</li>
+        <li>Green or brown lentils, ¾ cup</li>
+        <li>Quinoa, ⅓ cup</li>
+        <li>Brown rice, 1¼ cups</li>
+        <li>100% buckwheat soba, 8 oz (many soba brands are mostly wheat)</li>
+        <li>Black beans, 2 × 15 oz cans</li>
+        <li>Chickpeas, 4 × 15 oz cans (2 for B2, 2 for fish nights)</li>
+        <li>Tomato paste, 6 oz can</li>
+        <li>White miso, small tub</li>
+        <li>Tamari, rice vinegar, toasted sesame oil, avocado oil, olive oil</li>
+        <li>Tahini, 1 jar</li>
+        <li>Pomegranate molasses, 1 bottle</li>
+        <li>Sesame seeds, arrowroot, black seed (nigella), baking powder, vanilla</li>
+        <li>Spices: cumin, smoked paprika, chili powder, Mexican oregano, coriander, turmeric, black pepper, garlic powder, ground cinnamon, cinnamon sticks, whole cloves</li>
+        <li>Trail mix restock: walnuts, peanuts, sunflower seeds, cashews, pistachios, dried blueberries, dried cranberries (about 6½ cups of mix per two weeks; most dried cranberries are sugar-sweetened, so look for juice-sweetened ones)</li>
+      </ul>
+      <p class="sub">Tea herbs (about a month's supply)</p>
+      <ul class="check">
+        <li>Morning: gotu kola 2 oz, spearmint or peppermint 2 oz, tulsi 1 oz, oat tops or oat straw 1 oz</li>
+        <li>Evening: passionflower 2 oz, lemon balm 2 oz, chamomile 1 oz, lavender ½ oz</li>
+        <li>Matcha (optional)</li>
+      </ul>
+    </div>
+
+    <div class="store" data-list="birite">
+      <h3>Big trip: Bi-Rite, 3639 18th St <small>same day</small></h3>
+      <ul class="check">
+        <li>Boneless skinless chicken thighs, 2¾ lb (freeze 1¼ lb labeled B2)</li>
+        <li>Ground turkey (93% lean), 1 lb</li>
+        <li>Wild salmon, 1 lb, skinned (ask the counter)</li>
+        <li>Fish nights: 3 portions of wild salmon or cod, about 5 oz each. Wrap each one and freeze flat.</li>
+        <li>Chicken breast, 1½ lb (freeze, labeled B1)</li>
+        <li>Raw peeled shrimp, 1¼ lb, frozen (keep frozen, labeled B3)</li>
+        <li>Chicken backs or wings for your broth base, if you make it with bones</li>
+      </ul>
+      <p class="muted">Ask which farms the chicken comes from. "Pasture-raised" with a named farm tells you more than "free-range."</p>
+    </div>
+
+    <div class="store" data-list="quick">
+      <h3>Quick stop: Rainbow <small>before Week B prep</small></h3>
+      <ul class="check">
+        <li>Oyster mushrooms, 12 oz</li>
+        <li>Shiitake, 8 oz</li>
+        <li>Kale, 1 large bunch (about 6 oz)</li>
+        <li>Broccoli, 2 crowns: 8 oz for B3, the rest for fish nights this week</li>
+        <li>Siggi's vanilla cups (5.3 oz), 6</li>
+        <li>2% cottage cheese, 1 single-serve cup (Week B muffins)</li>
+        <li>Scallions, 1 bunch</li>
+        <li>Fresh ginger, a 3-inch piece</li>
+        <li>Broth herbs: oregano and thyme, 1 pack each</li>
+        <li>Plain 2% Greek yogurt, 16 oz tub</li>
+        <li>Labneh, 8–10 oz (or strain 1 cup Greek yogurt overnight)</li>
+        <li>2% milk, ½ gallon + 1 pint</li>
+      </ul>
+    </div>
+
+    <div class="store" data-list="once">
+      <h3>Once a season</h3>
+      <ul class="check">
+        <li>Nigerian dried ginger slices: The African Outlet (Bayview) or Man Must Wak (Oakland). Call ahead, or order online.</li>
+        <li>Sea moss gel, when you run low</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <section id="recipes" role="tabpanel" hidden>
+    <h2>Recipes</h2>
+    <p>Each main cooks in 45 minutes or less. Nutrition is per serving, including its sauce.</p>
+    <div class="note"><b>Garlic, every time:</b> mince it first and let it sit 10 minutes before heat or acid touches it. Sauces with raw garlic (tahini, labneh, pesto) stay cold and go on after reheating, never before.</div>
+
+    <h3>Week A</h3>
+    <details><summary>A1: Sheet-pan chicken, shiitake, broccoli &amp; sweet potato</summary>
+      <p class="macro">5 servings. about 485 kcal, 37 g protein, 11 g fiber. 40 minutes</p>
+      <ul>
+        <li>1½ lb boneless skinless chicken thighs</li>
+        <li>1½ lb sweet potatoes, ¾-inch cubes</li>
+        <li class="seasonal">Fall and winter: swap in butternut or kabocha squash for half the sweet potato.</li>
+        <li>1½ lb broccoli florets</li>
+        <li>12 oz shiitake, stems removed, halved</li>
+        <li>1½ tbsp olive oil, divided</li>
+        <li>1 tsp each smoked paprika, cumin and garlic powder; ½ tsp turmeric; black pepper; salt</li>
+        <li>Sauce: 5 tbsp tahini, ¼ cup lemon juice, 2 garlic cloves, 1 tsp honey, salt, 3–5 tbsp water</li>
+      </ul>
+      <ol class="steps">
+        <li>Oven to 425°F. Mince the sauce garlic and let it rest.</li>
+        <li>Toss sweet potatoes with ½ tbsp oil and half the spices. Roast 10 minutes.</li>
+        <li>Toss chicken with the rest of the spices and ½ tbsp oil; spread on a second pan with the shiitake. Add broccoli with the last ½ tbsp oil to the sweet potato pan.</li>
+        <li>Roast both pans 20–25 minutes, until the chicken reads 175°F (safe at 165°F; thighs are juicier higher).</li>
+        <li>Whisk the sauce until pourable. Portion into 5 small cups.</li>
+        <li>Slice the chicken and portion. Top with ground papaya seed after reheating.</li>
+      </ol>
+    </details>
+
+    <details><summary>A2: Turkey, lentil &amp; cremini chili</summary>
+      <p class="macro">5 servings. about 556 kcal, 41 g protein, 16 g fiber (with 1 pesto cube). 40 minutes. freezes best</p>
+      <ul>
+        <li>1 tbsp olive oil</li>
+        <li>1 lb ground turkey (93% lean)</li>
+        <li>1 onion and 2 carrots, diced</li>
+        <li>1 lb 4 oz cremini, chopped small</li>
+        <li class="seasonal">Summer and fall: swap a diced bell pepper in for one carrot.</li>
+        <li>4 garlic cloves</li>
+        <li>6 oz can tomato paste</li>
+        <li>2 tbsp chili powder, 1 tbsp cumin, 1 tsp smoked paprika, 1 tsp Mexican oregano</li>
+        <li>¾ cup dry green or brown lentils, rinsed</li>
+        <li>2 cans black beans, drained and rinsed</li>
+        <li>3 cups rosemary-sage broth base (or water)</li>
+        <li>1 tsp dried epazote (in summer, a few fresh sprigs instead)</li>
+        <li>Salt, lime juice</li>
+        <li>To serve: 1 frozen pesto cube per bowl</li>
+      </ul>
+      <ol class="steps">
+        <li>Mince the garlic first. Heat the oil in a Dutch oven and brown the turkey, about 5 minutes.</li>
+        <li>Add onion, carrots and mushrooms. Cook 6–8 minutes, until the mushroom liquid cooks off.</li>
+        <li>Add garlic, tomato paste and spices. Stir 2 minutes, until the paste darkens.</li>
+        <li>Add lentils, beans, broth and epazote. Cover and simmer about 25 minutes, until the lentils are tender.</li>
+        <li>Pull the epazote stems, then season with salt and lime.</li>
+        <li>Pack a frozen pesto cube in a small cup next to each container. Stir it in after heating.</li>
+      </ol>
+    </details>
+
+    <details><summary>A3: Salmon-quinoa cakes with roasted cauliflower</summary>
+      <p class="macro">4 servings (12 cakes). about 515 kcal, 38 g protein, 8 g fiber. 40 minutes</p>
+      <ul>
+        <li>1 lb skinless wild salmon</li>
+        <li>1 cup cooked quinoa (⅓ cup dry), cooled</li>
+        <li>2 eggs, ¼ cup Greek yogurt, 2 tbsp ground flax</li>
+        <li>½ small onion, grated</li>
+        <li>2 garlic cloves</li>
+        <li>2 tbsp chopped dill, zest of 1 lemon, 1 tsp salt, black pepper</li>
+        <li class="seasonal">If dill is out: flat-leaf parsley, or 1 tsp dried dill in the cakes.</li>
+        <li>1 tbsp olive oil for brushing</li>
+        <li>Cauliflower: 2 heads in florets, 1 tbsp olive oil, 1 tsp cumin, salt, 1 tsp black seed</li>
+        <li class="seasonal">Late summer, when cauliflower is thin: broccoli, same weight. Fall and winter: half cauliflower, half winter squash.</li>
+        <li>Finish: 2 tsp pomegranate vinaigrette per serving</li>
+        <li>Dill yogurt: ½ cup Greek yogurt, 1 tbsp lemon juice, 1 tbsp dill, salt</li>
+      </ul>
+      <ol class="steps">
+        <li>Oven to 425°F. Roast the cauliflower with oil, cumin and salt for 25–30 minutes; add the black seed for the last 5.</li>
+        <li>Chop the salmon into ¼-inch pieces by knife (or a few quick pulses in a processor).</li>
+        <li>Mix salmon with quinoa, eggs, yogurt, flax, onion, garlic, dill, zest, salt and pepper. Rest 5 minutes.</li>
+        <li>Shape 12 patties on a parchment-lined pan and brush with oil. Bake 15–18 minutes, to 145°F inside.</li>
+        <li>Drizzle the vinaigrette on the cauliflower once it's out of the oven.</li>
+        <li>Stir together the dill yogurt and portion into 4 cups. Eat the fridge servings by day 3.</li>
+      </ol>
+    </details>
+
+    <h3>Week B</h3>
+    <details><summary>B1: Miso-ginger chicken, oyster mushrooms &amp; cabbage over brown rice</summary>
+      <p class="macro">5 servings. about 490 kcal, 41 g protein, 8 g fiber. 45 minutes</p>
+      <ul>
+        <li>1¼ cups brown rice</li>
+        <li>1½ lb chicken breast, thinly sliced</li>
+        <li>Marinade: 1 tbsp white miso, 2 tbsp tamari, 1 tbsp honey, 2 tbsp grated ginger (or 1 tsp Nigerian ginger powder), 3 garlic cloves, 1 tbsp rice vinegar</li>
+        <li>1 tbsp avocado oil</li>
+        <li>12 oz oyster mushrooms, torn</li>
+        <li>1½ lb cabbage, shredded</li>
+        <li>Finish: 2 tbsp white miso, 1 tbsp toasted sesame oil, 1 tbsp hot water, 1 tbsp sesame seeds, scallions</li>
+      </ul>
+      <ol class="steps">
+        <li>Boil the rice in a big pot of water like pasta for 30 minutes. Drain, then cover for 10 minutes.</li>
+        <li>Mince the garlic, let it rest, then marinate the chicken for at least 10 minutes.</li>
+        <li>Heat oil in a large skillet over high heat. Brown the mushrooms, 5–6 minutes, then set aside.</li>
+        <li>Cook the chicken 6–7 minutes, to 165°F.</li>
+        <li>Add cabbage and a splash of water; cook 4–5 minutes until just wilted. Return the mushrooms.</li>
+        <li>Off the heat, stir in the miso-sesame finish and the sesame seeds.</li>
+        <li>Cool the rice fast on a tray before portioning.</li>
+      </ol>
+      <p class="muted">Miso's live cultures won't survive reheating; it's here for flavor. Your kimchi, added cold, is the live-culture source.</p>
+    </details>
+
+    <details><summary>B2: Shawarma chicken bowls with chickpeas &amp; carrots</summary>
+      <p class="macro">5 servings. about 535 kcal, 34 g protein, 12 g fiber (with labneh and 1 pesto cube). 40 minutes</p>
+      <ul>
+        <li>1¼ lb chicken thighs</li>
+        <li>Spice: 2 tsp cumin, 2 tsp smoked paprika, 1 tsp coriander, 1 tsp turmeric, ½ tsp cinnamon, ¼ tsp ground cloves, black pepper, salt</li>
+        <li>1 tbsp lemon juice</li>
+        <li>2 cans chickpeas, drained and patted dry</li>
+        <li>1½ lb carrots, cut into sticks</li>
+        <li>1 onion, sliced</li>
+        <li>2 tbsp olive oil, divided</li>
+        <li>2 tbsp pomegranate molasses</li>
+        <li>Garlic labneh: ⅔ cup labneh, 2 garlic cloves, lemon, salt</li>
+        <li>To serve: 1 frozen pesto cube per bowl, ground papaya seed</li>
+      </ul>
+      <ol class="steps">
+        <li>Oven to 425°F. Mince the labneh garlic and let it rest.</li>
+        <li>Toss the chicken with half the spice, 1 tbsp oil and the lemon juice. Spread it on a pan with the onion.</li>
+        <li>Toss carrots and chickpeas with the rest of the spice and oil on a second pan.</li>
+        <li>Roast both 25–30 minutes, shaking the chickpea pan halfway.</li>
+        <li>Drizzle pomegranate molasses over the carrots and chickpeas once they're out of the oven.</li>
+        <li>Stir the garlic into the labneh and portion into 5 cups (2 tbsp each).</li>
+        <li>Slice the chicken and portion. Labneh and pesto go on after reheating.</li>
+      </ol>
+    </details>
+
+    <details><summary>B3: Shrimp, broccoli &amp; shiitake stir-fry with soba</summary>
+      <p class="macro">4 servings. about 460 kcal, 42 g protein, 8 g fiber. 30 minutes</p>
+      <ul>
+        <li>8 oz 100% buckwheat soba</li>
+        <li>1¼ lb peeled shrimp, thawed</li>
+        <li>8 oz fresh broccoli, cut into small florets (peel and slice the stem too)</li>
+        <li>8 oz shiitake, sliced</li>
+        <li>½ medium cabbage (about 7 oz), shredded; 3 carrots, cut into matchsticks</li>
+        <li class="seasonal">Summer and fall: 2 sliced bell peppers in place of the cabbage. Spring: a handful of snap peas.</li>
+        <li>3 garlic cloves, 1 tbsp grated ginger</li>
+        <li>Sauce: 3 tbsp tamari, 1 tbsp honey, 1 tbsp rice vinegar, 1 tsp arrowroot, 2 tbsp water</li>
+        <li>1 tbsp avocado oil, ½ tbsp toasted sesame oil, lime</li>
+      </ul>
+      <ol class="steps">
+        <li>Mince the garlic first. Cook the soba one minute less than the package says, rinse it cold, and toss with the sesame oil.</li>
+        <li>Whisk the sauce.</li>
+        <li>Heat avocado oil in a wok over high heat. Cook the shiitake 3–4 minutes, then the broccoli and carrots 3 minutes, then the cabbage 2 minutes. Push everything to the side.</li>
+        <li>Cook the shrimp 2–3 minutes, until just pink. Slightly under is fine, since they cook more when reheated.</li>
+        <li>Add the garlic and ginger for 30 seconds, then the sauce, and stir about 1 minute until glossy.</li>
+        <li>Portion over the soba. Reheat at 70% power so the shrimp stay tender.</li>
+      </ol>
+    </details>
+
+    <h3>Breakfasts, snacks and extras</h3>
+    <details><summary>Overnight oats jars (Week A)</summary>
+      <p class="macro">Per jar. about 380 kcal, 17 g protein, 11 g fiber. 4 wide-mouth pint jars, for Days 4–7</p>
+      <ul>
+        <li>½ cup rolled oats</li>
+        <li>¼ cup Greek yogurt</li>
+        <li>⅓ cup 2% milk</li>
+        <li>1 tbsp chia, 1 tbsp ground flax</li>
+        <li>1 tsp honey (or stevia)</li>
+        <li>1 tbsp chopped unsweetened dried papaya</li>
+        <li>½ tsp cinnamon</li>
+      </ul>
+      <p>Stir, lid, and freeze all 4. Move one to the fridge the night before; it thaws overnight.</p>
+    </details>
+
+    <details><summary>Baked oat cups (Week B)</summary>
+      <p class="macro">Makes 8. 2 cups per serving, for Days 4–7. about 365 kcal, 17 g protein, 6 g fiber. 350°F for 20–22 minutes</p>
+      <ul>
+        <li>2 cups rolled oats</li>
+        <li>2 eggs</li>
+        <li>¾ cup Greek yogurt</li>
+        <li>¾ cup 2% milk</li>
+        <li>2 tbsp honey (add stevia if you want it sweeter)</li>
+        <li>¼ cup raw pepitas</li>
+        <li>2 tbsp ground flax</li>
+        <li>¼ cup chopped unsweetened dried papaya</li>
+        <li>1 tsp cinnamon, ½ tsp baking powder, ½ tsp vanilla, pinch of salt</li>
+      </ul>
+      <p>Mix everything, divide among 8 greased muffin cups, and bake. Freeze them in pairs. Eat cold, or warm them for 30–45 seconds. Baking reduces the pepitas' cucurbitacin, per your guide; your raw pepitas come from the pesto and trail mix.</p>
+    </details>
+
+    <details><summary>Gym breakfast (Days 1–3, zero prep)</summary>
+      <p class="macro">about 540 kcal, 28 g protein, 8 g fiber. Nothing to prep</p>
+      <ul>
+        <li>1 Siggi's vanilla (5.3 oz)</li>
+        <li>½ cup trail mix</li>
+        <li>1 tbsp chia seeds</li>
+      </ul>
+      <p>Stir it together in the cup, or pour the yogurt over the trail mix in your mug. Three Siggi's live in the gym fridge each week; the trail mix and chia live in the gym bin. On these days it replaces the oats and the afternoon trail mix.</p>
+    </details>
+
+    <details><summary>Home night: sheet-pan salmon (or cod), broccoli &amp; chickpeas</summary>
+      <p class="macro">1 serving. about 545 kcal, 44 g protein, 17 g fiber with salmon and broccoli (with cabbage: about 520 kcal, 40 g protein; cod instead of salmon: about 60 kcal less). 25 minutes, mostly hands-off</p>
+      <ul>
+        <li>1 frozen wild salmon portion, about 5 oz (or about 6 oz cod)</li>
+        <li>10 oz fresh vegetables: broccoli florets early in the week (a crown keeps about 5 days), then cabbage wedges or thick carrot coins, which keep for weeks</li>
+        <li>½ can chickpeas, drained and patted dry</li>
+        <li>2 tsp olive oil, divided</li>
+        <li>½ tsp cumin or smoked paprika, salt, pepper</li>
+        <li>Lemon wedge; your ¼ cup kimchi on the side</li>
+      </ul>
+      <ol class="steps">
+        <li>Oven to 425°F. Toss the vegetables and chickpeas with 1 tsp oil and the spice on a sheet pan. Roast 10 minutes (cabbage wedges and carrots: 15).</li>
+        <li>Push them to the edges. Rub the fish with the last teaspoon of oil, salt and pepper, and lay it in the middle.</li>
+        <li>Roast 10–12 minutes if the fish was thawed, 15–18 if it's straight from the freezer (rinse off any ice first). It's done at 145°F, or when it flakes.</li>
+        <li>Squeeze the lemon over everything.</li>
+      </ol>
+      <p>Move a portion to the fridge the night before if you think you'll want it. If you forget, cook it from frozen. The dinner container you didn't eat goes back in the freezer as a backup for a triple day or a Sunday you skip prep. The other half-can of chickpeas keeps 3–4 days in the fridge.</p>
+    </details>
+
+    <details><summary>Egg muffins (both weeks)</summary>
+      <p class="macro">Makes 12. 2 per serving. about 172 kcal, 14 g protein. 350°F for 20–22 minutes</p>
+      <ul>
+        <li>10 eggs and ½ cup 2% cottage cheese, whisked</li>
+        <li>Week A filling: 5 oz spinach, 6 oz cremini, ½ onion</li>
+        <li>Week B filling: 6 oz kale, 2 scallions, ½ onion</li>
+        <li>1 tbsp olive oil, 1 tsp black seed, salt, pepper</li>
+      </ul>
+      <p>Sauté the filling in oil for 5 minutes, divide it among 12 greased cups, pour in the egg mixture, and top with black seed. Grind papaya seed over them when you eat them. Day 7's snack is a Siggi's instead.</p>
+    </details>
+
+    <details><summary>Pepita-cilantro pesto (Week A Sunday)</summary>
+      <p class="macro">About 16 tablespoons. 64 kcal per tablespoon</p>
+      <ul>
+        <li>½ cup raw pepitas</li>
+        <li>2 packed cups cilantro (stems are fine)</li>
+        <li>3 garlic cloves, rested 10 minutes</li>
+        <li>⅓ cup olive oil</li>
+        <li>2 tbsp lime or lemon juice</li>
+        <li>½ tsp salt, splash of water</li>
+      </ul>
+      <p>Blend until smooth and freeze in tablespoon cubes. That's 5 cubes for the A2 chili, 5 for the B2 bowls, plus a few spares. Garlic in oil must stay frozen or refrigerated, never at room temperature.</p>
+    </details>
+
+    <details><summary>Pomegranate vinaigrette (Week A Sunday)</summary>
+      <p>Shake 1 tbsp pomegranate molasses with 3 tbsp olive oil and a pinch of salt. It has no garlic, so it keeps in the fridge for two weeks. Use it on the A3 cauliflower; any extra is good on egg muffins.</p>
+    </details>
+
+    <details><summary>Optional extras</summary>
+      <ul>
+        <li><b>¼ avocado</b> (California avocados run spring through early fall) on the chili or a B2 bowl, about 60 kcal and 2.5 g fiber. It's best on home meals, since cut avocado browns in a lunch bag.</li>
+        <li><b>Pet-sitting pouch:</b> an extra ¼ cup trail mix (185 kcal). On days with all three jobs, also grab a spare Siggi's from a work fridge (110 kcal).</li>
+      </ul>
+    </details>
+  </section>
+
+  <section id="swaps" role="tabpanel" hidden>
+    <h2>Swaps &amp; seasons</h2>
+    <p>Rainbow buys seasonally, so something on the list will be missing some weeks. The recipes are written around produce that's there all year; these are the stand-ins. The recipes carry the same notes inline, so you don't have to come here mid-cook.</p>
+
+    <div class="plain">
+      <p><b>Three rules that keep the numbers honest:</b></p>
+      <ul>
+        <li>Swap by weight, not by piece. A pound of carrots for a pound of peppers keeps calories and fiber within a few grams.</li>
+        <li>Brassicas (cabbage, broccoli, cauliflower, Brussels sprouts) reheat better than peppers, zucchini or summer squash. Save the watery ones for the fridge days, 1 to 3.</li>
+        <li>Leafy greens shrink to almost nothing. If you're swapping a green for a firm vegetable, use about three times the raw weight.</li>
+      </ul>
+    </div>
+
+    <h3>By slot</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>Slot</th><th>Year-round default</th><th>Other year-round options</th><th>Seasonal upgrades</th></tr></thead>
+      <tbody>
+        <tr><td><b>Roasting vegetable</b><br>A1, A3, B2</td><td>Sweet potato (A1), cauliflower (A3), carrots (B2)</td><td>Broccoli, cabbage wedges, whole carrots</td><td>Winter squash: butternut or kabocha, fall into winter. Brussels sprouts, fall and winter.</td></tr>
+        <tr><td><b>Stir-fry crunch</b><br>B1, B3</td><td>Cabbage and carrots</td><td>Broccoli stems, thin-sliced kale ribs</td><td>Bell peppers, about July to November. Snap peas or snow peas, spring. Green beans, late spring into fall.</td></tr>
+        <tr><td><b>Leafy green</b><br>egg muffins, any bowl</td><td>Spinach (Week A), kale (Week B)</td><td>Cabbage, collards, bok choy</td><td>Chard, spring through fall.</td></tr>
+        <tr><td><b>Mushrooms</b><br>A1, A2, B1, B3</td><td>Cremini, shiitake, oyster</td><td>Any two of the three; they're grown indoors, so they're steady all year</td><td>Maitake shows up in fall. Lion's mane comes and goes.</td></tr>
+        <tr><td><b>Soft herb</b><br>A2, A3, pesto</td><td>Cilantro, parsley</td><td>Dill (usually there), scallion tops</td><td>Fresh epazote, summer. Basil, summer into early fall.</td></tr>
+        <tr><td><b>Hard herb</b><br>broth</td><td>Oregano, thyme, rosemary, sage</td><td>All four are year-round; bruise them either way</td><td>Nothing needed here.</td></tr>
+        <tr><td><b>Sweet-tart finish</b><br>A3, B2</td><td>Pomegranate molasses (a shelf bottle)</td><td>Lemon and a little honey</td><td>Fresh pomegranate arils, roughly October to January. A cup of arils is the real dose from your guide.</td></tr>
+        <tr><td><b>Extra fat</b><br>optional</td><td>Tahini, olive oil, pepitas</td><td>Labneh, pesto cubes</td><td>Avocado, spring into early fall for California fruit.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>What's out of the base plan on purpose</h3>
+    <ul>
+      <li><b>Bell peppers:</b> they were in the chili, the stir-fry and the Week B egg muffins. Now they're a summer and fall add-in, and the year-round versions use carrots, cabbage and kale.</li>
+      <li><b>Fresh epazote:</b> dried from the bulk spices is the default. It still cuts the gassiness in the beans.</li>
+      <li><b>Avocado:</b> off the shopping list, on the optional extras.</li>
+    </ul>
+    <p class="muted">Swapping the whole list this way moves your daily totals by less than 20 calories, so the numbers on the Two weeks tab still hold.</p>
+  </section>
+
+  <section id="drinks" role="tabpanel" hidden>
+    <h2>Tea, broth &amp; stash</h2>
+
+    <h3>Daily drinks</h3>
+    <ul>
+      <li><b>Sea moss:</b> one spoonful before you leave. One spoonful is a normal serving; don't add an iodine supplement on top.</li>
+      <li><b>Protein shake:</b> 1 scoop Ascent chocolate with 1 cup 2% milk. Before you leave, or on gym days mix it in a shaker and drink it at the retail break or after your shift. Keep it cold.</li>
+      <li><b>Focus tea:</b> first thing at work, or with breakfast on home days. Write your top three tasks while it steeps.</li>
+      <li><b>Creatine:</b> your usual 3–5 g with water. On gym days, first thing with your sea moss, since it holds you until breakfast. Other days, mid-morning. Timing matters much less than taking it every day.</li>
+      <li><b>Ginger tea:</b> one cup mid-morning. Keep a jar in each work fridge and refill it weekly.</li>
+      <li><b>Broth:</b> a home ritual, before dinner. On packed days, skip it rather than rushing the steep.</li>
+      <li><b>Evening tea:</b> an hour before bed, lid on, screens off, with 1–2 crushed whole cloves. Cloves have no caffeine and don't work against the calming herbs. The flavor is strong, so start with one.</li>
+    </ul>
+
+    <details open><summary>Ginger-cinnamon-clove tea with Nigerian ginger</summary>
+      <ul>
+        <li>2 quarts water</li>
+        <li>¼ cup dried Nigerian ginger slices, cracked in a bag with a rolling pin. Dried ginger is stronger than fresh, so start here and adjust the next batch.</li>
+        <li>3 cinnamon sticks, 8–10 whole cloves</li>
+        <li>Honey to taste</li>
+      </ul>
+      <p>Simmer covered for 20 minutes. Strain, stir in the honey while it's warm, cool, and jar it. It keeps about 5 days in the fridge, so freeze a jar if you make more.</p>
+    </details>
+
+    <details><summary>Broth, per cup (from your prep guide)</summary>
+      <ol class="steps">
+        <li>Mince 1–2 garlic cloves and let them sit.</li>
+        <li>Heat 1 cup of broth base to just under a simmer, then turn off the heat.</li>
+        <li>Add 3–4 bruised sprigs each of oregano (leaves stripped) and thyme. Cover and steep 10–15 minutes.</li>
+        <li>Strain, then add the garlic in the mug at drinking temperature.</li>
+      </ol>
+      <p class="muted">One correction to the guide: carnosic acid from rosemary is fat-soluble, not water-soluble, so the "don't skim the fat" advice helps your rosemary as well as the oregano and thyme.</p>
+    </details>
+
+    <h3>Stash bins, restocked every other Sunday</h3>
+    <p>One bin at the gym and one at the store means the only things you carry are the day's containers.</p>
+    <div class="bags">
+      <div class="bag gym"><h3>Gym bin</h3>
+        <ul class="check" data-list="stashgym">
+          <li>Focus tea blend, small jar</li>
+          <li>Mug with a lid, and a tea strainer</li>
+          <li>Honey and stevia</li>
+          <li>Creatine and scoop</li>
+          <li>Trail mix jar</li>
+          <li>Chia seeds, 8 oz jar</li>
+          <li>Papaya seed grinder</li>
+          <li>Fork and spoon</li>
+          <li>Fridge: kimchi jar, ginger tea jar, 3 Siggi's for breakfast plus 1 spare</li>
+        </ul>
+      </div>
+      <div class="bag retail"><h3>Retail bin</h3>
+        <ul class="check" data-list="stashretail">
+          <li>Focus tea blend, small jar</li>
+          <li>Mug with a lid, and a tea strainer</li>
+          <li>Honey and stevia</li>
+          <li>Creatine and scoop</li>
+          <li>Trail mix jar</li>
+          <li>Papaya seed grinder</li>
+          <li>Fork and spoon</li>
+          <li>Fridge: kimchi jar, ginger tea jar, 2 Siggi's</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>The one habit that makes this work</h3>
+    <p>Keep two bins on a fridge shelf, one for the gym and one for retail. Each night, check tomorrow's schedule on the Today tab and put the containers in the right bin. In the morning, tip each bin into its insulated bag, add an ice pack, and go. Keep the bags by the door and the ice packs in the freezer door.</p>
+
+    <div class="note">If you take any prescription medications, run the tea blends past a pharmacist. Gotu kola and passionflower both have interaction notes, and matcha adds caffeine to anything stimulating.</div>
+  </section>
+
+  <section id="settings" role="tabpanel" hidden>
+    <h2>Settings</h2>
+    <div class="settings-grid">
+      <div class="card" id="acctCard">
+        <h3 style="margin-top:0">Sync account</h3>
+        <p class="muted">Sign in on your phone and your iPad with the same email to keep checklists and your food log in sync. Everything still works offline.</p>
+        <div id="acctOut"></div>
+        <div id="acctSignedOut">
+          <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email" inputmode="email"></div>
+          <p><button class="btn primary" id="sendCode" type="button">Email me a code</button></p>
+          <div id="codeStep" hidden>
+            <div class="field"><label for="otp">Code from the email</label><input id="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="10"></div>
+            <p><button class="btn primary" id="verifyCode" type="button">Sign in</button></p>
+          </div>
+        </div>
+        <div id="acctSignedIn" hidden>
+          <p>Signed in as <b id="acctEmail"></b></p>
+          <p class="status" id="syncStatus"></p>
+          <p><button class="btn" id="syncNow" type="button">Sync now</button> <button class="btn" id="signOut" type="button">Sign out</button></p>
+        </div>
+      </div>
+
+      <div class="card" id="pushCard">
+        <h3 style="margin-top:0">Nightly reminder on this device</h3>
+        <p class="muted">A notification that tells you what to move from the freezer and to load tomorrow's bins. Turn it on separately on each device.</p>
+        <div class="field"><label for="remindAt">Remind me at</label><input id="remindAt" type="time" value="20:30"></div>
+        <p class="status" id="pushStatus"></p>
+        <p><button class="btn primary" id="pushOn" type="button">Turn on reminders</button>
+           <button class="btn" id="pushTest" type="button" hidden>Send a test</button>
+           <button class="btn" id="pushOff" type="button" hidden>Turn off</button></p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Daily targets</h3>
+        <div class="addform">
+          <div class="field"><label for="tK">Calories</label><input id="tK" type="number" inputmode="numeric" min="0"></div>
+          <div class="field"><label for="tP">Protein (g)</label><input id="tP" type="number" inputmode="numeric" min="0"></div>
+          <div class="field"><label for="tF">Fiber (g)</label><input id="tF" type="number" inputmode="numeric" min="0"></div>
+        </div>
+        <p><button class="btn" id="saveTargets" type="button">Save targets</button></p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Plan start</h3>
+        <p class="muted">The Monday that counts as Week A, Day 1. Change it if you pause the plan and restart.</p>
+        <div class="field"><label for="planStart">Week A, Day 1</label><input id="planStart" type="date"></div>
+        <p><button class="btn" id="savePlanStart" type="button">Save start date</button></p>
+        <p class="status" id="startStatus"></p>
+      </div>
+    </div>
+    <p class="muted" id="versionLine"></p>
+  </section>
+
+</div>
+<script src="./vendor/supabase.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // ================= CONFIG (fill these in after Supabase setup) =================
+  var CONFIG = {
+    SUPABASE_URL: '',          // e.g. 'https://abcdefghijkl.supabase.co'
+    SUPABASE_KEY: '',          // publishable (or legacy anon) key; safe to ship in the page
+    VAPID_PUBLIC_KEY: '',      // from tools/vapid-keys.html
+    PLAN_START: '2026-09-21',  // default Week A, Day 1 (a Monday)
+    REMINDER_FUNCTION: 'meal-reminders'
+  };
+  var APP_VERSION = '1.1.2';
+
+  // ================= utils =================
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function localDateKey(d) { d = d || new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function parseDateKey(k) { var a = String(k).split('-').map(Number); return new Date(a[0], a[1] - 1, a[2]); }
+  function dayDiff(a, b) {
+    return Math.round((Date.UTC(b.getFullYear(), b.getMonth(), b.getDate()) - Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())) / 86400000);
+  }
+  function mod(n, m) { return ((n % m) + m) % m; }
+  var ls = {
+    get: function (k, d) { try { var v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } }
+  };
+  function r0(n) { return Math.round(n); }
+  function configured() { return !!(CONFIG.SUPABASE_URL && CONFIG.SUPABASE_KEY); }
+
+  // ================= KV: offline-first, last-write-wins per key =================
+  var KV = {
+    data: ls.get('mp_kv', {}),
+    outbox: ls.get('mp_outbox', []),
+    get: function (k, d) { var r = this.data[k]; return r === undefined ? d : r.v; },
+    set: function (k, v) {
+      var t = Date.now();
+      var prev = this.data[k];
+      if (prev && prev.t >= t) t = prev.t + 1;
+      this.data[k] = { v: v, t: t };
+      if (this.outbox.indexOf(k) < 0) this.outbox.push(k);
+      this.save();
+      Sync.schedule();
+    },
+    applyRemote: function (k, v, t) {
+      var r = this.data[k];
+      if (!r || t > r.t) { this.data[k] = { v: v, t: t }; return true; }
+      return false;
+    },
+    save: function () { ls.set('mp_kv', this.data); ls.set('mp_outbox', this.outbox); },
+    keys: function (prefix) { return Object.keys(this.data).filter(function (k) { return k.indexOf(prefix) === 0; }); }
+  };
+
+  // ================= plan data =================
+  var M = {
+    A1: { n: 'Sheet-pan chicken, shiitake, broccoli & sweet potato', s: 'tahini sauce cup', k: 485, p: 37.0, f: 10.8 },
+    A2: { n: 'Turkey, lentil & cremini chili', s: 'frozen pesto cube', k: 556, p: 40.7, f: 15.9 },
+    A3: { n: 'Salmon-quinoa cakes & cauliflower', s: 'dill yogurt cup', k: 514, p: 38.4, f: 8.1 },
+    B1: { n: 'Miso-ginger chicken over brown rice', s: '', k: 488, p: 40.6, f: 7.5 },
+    B2: { n: 'Shawarma chicken bowl', s: 'labneh cup + frozen pesto cube', k: 533, p: 34.0, f: 12.0 },
+    B3: { n: 'Shrimp & broccoli soba stir-fry', s: '', k: 461, p: 41.5, f: 8.3 }
+  };
+  var BR = { A: { n: 'Overnight oats jar', k: 382, p: 17.3, f: 10.6 }, B: { n: '2 baked oat cups', k: 363, p: 17.4, f: 5.9 } };
+  var MU = { A: { n: '2 egg muffins', k: 172, p: 14.0, f: 0.9 }, B: { n: '2 egg muffins', k: 172, p: 13.5, f: 1.5 } };
+  var YOG = { n: "Siggi's vanilla cup", k: 110, p: 16, f: 0 };
+  var GYM_BR = { n: "Siggi's vanilla + ½ cup trail mix + 1 tbsp chia", k: 538, p: 28, f: 8.1 };
+  var FISH = { n: 'Sheet-pan salmon (or cod), broccoli & chickpeas at home', k: 545, p: 44, f: 17 };
+  var ROT = [[1, 2], [3, 1], [2, 3], [1, 2], [3, 1], [2, 3], [1, 2]];
+  var DAYN = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  var EXTRAS = [
+    { id: 'x_trail', n: 'Extra ¼ cup trail mix', k: 185, p: 5, f: 2 },
+    { id: 'x_yog', n: "Spare Siggi's cup", k: 110, p: 16, f: 0 },
+    { id: 'x_avo', n: '¼ avocado', k: 60, p: 0.7, f: 2.5 }
+  ];
+  var DEFAULT_TARGETS = { k: 2100, p: 120, f: 30 };
+
+  function dayPlan(w, d, opts) {
+    opts = opts || {};
+    var rot = ROT[d - 1];
+    var lk = w + rot[0], dk = w + rot[1];
+    var lunch = M[lk], prepped = M[dk];
+    var gymDay = d <= 3;                       // Mon-Wed: zero-prep breakfast at the gym
+    var fish = !!opts.fish;                    // quick fish dinner at home instead of the container
+    var dinner = fish ? FISH : prepped;
+    var snack = d === 7 ? YOG : MU[w];
+    var br = gymDay ? GYM_BR : BR[w];
+    var withSauce = function (m) { return m.n + (m.s ? ' + ' + m.s : ''); };
+    var dinnerTxt = fish ? 'Dinner: ' + FISH.n : 'Dinner (' + dk + '): ' + withSauce(prepped);
+    var items = [
+      { id: 'seamoss', n: 'Sea moss, one spoonful', k: 10, p: 0, f: 0.3 },
+      { id: 'shake', n: 'Protein shake (1 scoop + 1 cup 2% milk)', k: 242, p: 33.1, f: 0.5 },
+      { id: 'breakfast', n: 'Breakfast: ' + br.n, k: br.k, p: br.p, f: br.f },
+      { id: 'focustea', n: 'Focus tea with 1 tsp honey', k: 21, p: 0, f: 0 },
+      { id: 'gingertea', n: 'Ginger tea with honey', k: 43, p: 0, f: 0 },
+      { id: 'snack', n: 'Snack: ' + snack.n, k: snack.k, p: snack.p, f: snack.f },
+      { id: 'lunch', n: 'Lunch (' + lk + '): ' + withSauce(lunch), k: lunch.k, p: lunch.p, f: lunch.f },
+      { id: 'kimchi', n: '¼ cup kimchi', k: 6, p: 0.4, f: 0.6 }
+    ];
+    if (!gymDay) items.push({ id: 'trail', n: '¼ cup trail mix', k: 185, p: 5, f: 2 });
+    items.push({ id: 'broth', n: 'Cup of broth', k: 44, p: 5, f: 0.1 });
+    items.push({ id: fish ? 'dinnerfish' : 'dinner', n: dinnerTxt, k: dinner.k, p: dinner.p, f: dinner.f });
+    var tot = items.reduce(function (a, i) { return { k: a.k + i.k, p: a.p + i.p, f: a.f + i.f }; }, { k: 0, p: 0, f: 0 });
+    return { w: w, d: d, lk: lk, dk: dk, lunch: lunch, dinner: prepped, snack: snack, br: br, items: items,
+      gymDay: gymDay, fish: fish,
+      k: tot.k, p: tot.p, f: tot.f, frozen: d >= 4,
+      lunchTxt: 'Lunch (' + lk + '): ' + withSauce(lunch), dinnerTxt: dinnerTxt };
+  }
+
+  function planStartKey() { return KV.get('set:start', CONFIG.PLAN_START); }
+  function positionFor(date) {
+    var diff = dayDiff(parseDateKey(planStartKey()), date);
+    if (diff < 0) return { w: 'A', d: 1, pre: true, diff: diff };
+    var c = mod(diff, 14);
+    return { w: c < 7 ? 'A' : 'B', d: (c % 7) + 1, pre: false, diff: diff };
+  }
+
+  // Same wording as the push reminder (supabase/functions/meal-reminders/index.ts)
+  function tonightLines(w, d, pre) {
+    var out = [];
+    if (pre) {
+      out.push('The plan starts ' + parseDateKey(planStartKey()).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }) + '. The Sunday before is your big trip and first Week A prep.');
+      out.push('After prep, load the bins for Week A, Day 1.');
+      return out;
+    }
+    var nd = d === 7 ? 1 : d + 1;
+    var nw = d === 7 ? (w === 'A' ? 'B' : 'A') : w;
+    if (d === 7) {
+      out.push('Today is prep day for Week ' + nw + '. ' + (nw === 'A' ? 'Big trip first: Rainbow, then Bi-Rite.' : 'Quick Rainbow stop first; thaw the shrimp in cold water.'));
+      out.push('Tomorrow\'s food (Week ' + nw + ', Day 1) is in the fridge after prep. Load the bins tonight.');
+    } else if (nd >= 4) {
+      out.push('Move Week ' + nw + ', Day ' + nd + '\'s breakfast, snack, lunch, dinner and sauce cups from the freezer to the fridge.');
+      out.push('Put them in tomorrow\'s bins. If a main is still icy at lunch, use the defrost setting first.');
+    } else {
+      out.push('Week ' + nw + ', Day ' + nd + '\'s food is already in the fridge. Load tomorrow\'s bins.');
+    }
+    if (w === 'A' && d === 5) out.push('Also move the Week B chicken (breast and thighs) from the freezer to the fridge so it thaws by Sunday.');
+    if (d === 6) out.push('Tomorrow is prep day. Check the ' + (w === 'A' ? 'quick stop' : 'big trip') + ' list on the Shopping tab.');
+    return out;
+  }
+
+  // ================= app state =================
+  var todayKey = localDateKey();
+  var auto = positionFor(new Date());
+  var view = { w: auto.w, d: auto.d, jobs: null };
+
+  function isViewingToday() { return view.w === auto.w && view.d === auto.d; }
+  function defaultJobs(pos) { return pos.pre ? ['gym'] : (pos.d <= 3 ? ['gym'] : []); }
+  function currentJobs() {
+    if (isViewingToday()) return KV.get('jobs:' + todayKey, defaultJobs(auto));
+    return view.jobs || defaultJobs(view);
+  }
+  function fishOn() { return isViewingToday() ? !!KV.get('fish:' + todayKey, false) : !!view.fish; }
+  function setFish(on) { if (isViewingToday()) KV.set('fish:' + todayKey, !!on); else view.fish = !!on; }
+  function setJobs(jobs) {
+    if (isViewingToday()) KV.set('jobs:' + todayKey, jobs);
+    else view.jobs = jobs;
+  }
+  function targets() {
+    var t = KV.get('set:targets', DEFAULT_TARGETS);
+    return { k: +t.k || DEFAULT_TARGETS.k, p: +t.p || DEFAULT_TARGETS.p, f: +t.f || DEFAULT_TARGETS.f };
+  }
+
+  // ================= log =================
+  function logFor(dateKey) {
+    var pos = positionFor(parseDateKey(dateKey));
+    var plan = dayPlan(pos.w, pos.d, { fish: !!KV.get('fish:' + dateKey, false) });
+    var eaten = { k: 0, p: 0, f: 0 };
+    var any = false;
+    var add = function (x, times) { eaten.k += x.k * times; eaten.p += x.p * times; eaten.f += x.f * times; };
+    plan.items.forEach(function (i) { if (KV.get('log:' + dateKey + ':' + i.id, false)) { add(i, 1); any = true; } });
+    EXTRAS.forEach(function (x) { var c = +KV.get('log:' + dateKey + ':' + x.id, 0) || 0; if (c > 0) { add(x, c); any = true; } });
+    var customs = KV.keys('log:' + dateKey + ':c:').map(function (k) { return { key: k, v: KV.get(k, null) }; })
+      .filter(function (c) { return c.v; })
+      .sort(function (a, b) { return (a.v.at || 0) - (b.v.at || 0); });
+    customs.forEach(function (c) { add({ k: +c.v.k || 0, p: +c.v.p || 0, f: +c.v.f || 0 }, 1); any = true; });
+    return { pos: pos, plan: plan, eaten: eaten, customs: customs, any: any };
+  }
+
+  // ================= Sync (Supabase) =================
+  var Sync = {
+    client: null, user: null, timer: null, busy: false, lastOk: ls.get('mp_last_sync', null), lastErr: null,
+    init: function () {
+      if (!configured() || !window.supabase || !window.supabase.createClient) { renderBadge(); return; }
+      var self = this;
+      this.client = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY, {
+        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+      });
+      this.client.auth.onAuthStateChange(function (_ev, session) {
+        var was = self.user && self.user.id;
+        self.user = session ? session.user : null;
+        renderSettings(); renderBadge();
+        if (self.user && self.user.id !== was) setTimeout(function () { self.now(); }, 0);
+      });
+      this.client.auth.getSession().then(function (res) {
+        self.user = res.data && res.data.session ? res.data.session.user : null;
+        renderSettings(); renderBadge();
+        if (self.user) self.now();
+      });
+      window.addEventListener('online', function () { self.now(); });
+      document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') self.now(); });
+      setInterval(function () { if (document.visibilityState === 'visible') self.now(); }, 60000);
+    },
+    cursorKey: function () { return 'mp_cursor_' + (this.user ? this.user.id : 'none'); },
+    schedule: function () {
+      var self = this;
+      renderBadge();
+      if (!this.client || !this.user) return;
+      clearTimeout(this.timer);
+      this.timer = setTimeout(function () { self.now(); }, 1500);
+    },
+    push: async function () {
+      if (!KV.outbox.length) return;
+      var keys = KV.outbox.slice(0, 200);
+      var sent = {};
+      var items = keys.filter(function (k) { return KV.data[k]; }).map(function (k) {
+        sent[k] = KV.data[k].t;
+        return { key: k, value: KV.data[k].v, updated_ms: KV.data[k].t };
+      });
+      var res = await this.client.rpc('kv_put', { items: items });
+      if (res.error) throw res.error;
+      KV.outbox = KV.outbox.filter(function (k) { return !(k in sent) || (KV.data[k] && KV.data[k].t !== sent[k]); });
+      KV.save();
+      if (KV.outbox.length) return this.push();
+    },
+    pull: async function () {
+      var cursor = ls.get(this.cursorKey(), '1970-01-01T00:00:00Z');
+      var changed = false;
+      for (var guard = 0; guard < 50; guard++) {
+        var res = await this.client.from('mp_kv').select('key,value,updated_ms,server_ts')
+          .gt('server_ts', cursor).order('server_ts', { ascending: true }).limit(1000);
+        if (res.error) throw res.error;
+        var rows = res.data || [];
+        rows.forEach(function (r) { if (KV.applyRemote(r.key, r.value, Number(r.updated_ms))) changed = true; });
+        if (rows.length) cursor = rows[rows.length - 1].server_ts;
+        if (rows.length < 1000) break;
+      }
+      ls.set(this.cursorKey(), cursor);
+      if (changed) { KV.save(); renderAll(); }
+    },
+    now: async function () {
+      if (!this.client || !this.user || this.busy) return;
+      if (typeof navigator !== 'undefined' && navigator.onLine === false) { renderBadge(); return; }
+      this.busy = true;
+      try {
+        await this.push();
+        await this.pull();
+        this.lastOk = new Date().toISOString(); this.lastErr = null;
+        ls.set('mp_last_sync', this.lastOk);
+      } catch (e) {
+        this.lastErr = (e && e.message) || String(e);
+      } finally {
+        this.busy = false;
+        renderBadge(); renderSyncStatus();
+      }
+    },
+    sendCode: async function (email) {
+      var res = await this.client.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true } });
+      if (res.error) throw res.error;
+    },
+    verify: async function (email, code) {
+      var res = await this.client.auth.verifyOtp({ email: email, token: code, type: 'email' });
+      if (res.error) throw res.error;
+    },
+    signOut: async function () { await this.client.auth.signOut(); }
+  };
+
+  // ================= Push reminders =================
+  function urlB64ToUint8Array(base64) {
+    var padding = '='.repeat((4 - base64.length % 4) % 4);
+    var b64 = (base64 + padding).replace(/-/g, '+').replace(/_/g, '/');
+    var raw = atob(b64);
+    var out = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+    return out;
+  }
+  var Push = {
+    supported: function () { return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window; },
+    standalone: function () {
+      return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+    },
+    isIOS: function () {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    },
+    deviceLabel: function () {
+      if (/iPhone/.test(navigator.userAgent)) return 'iPhone';
+      if (/iPad/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'iPad';
+      return 'Other';
+    },
+    current: async function () {
+      if (!this.supported()) return null;
+      var reg = await navigator.serviceWorker.ready;
+      return reg.pushManager.getSubscription();
+    },
+    enable: async function (time) {
+      if (!Sync.user) throw new Error('Sign in first so the reminder knows where to go.');
+      if (!CONFIG.VAPID_PUBLIC_KEY) throw new Error('Add your VAPID public key to CONFIG first.');
+      var perm = await Notification.requestPermission();
+      if (perm !== 'granted') throw new Error('Notifications are blocked. Allow them in Settings > Notifications > Meal Prep.');
+      var reg = await navigator.serviceWorker.ready;
+      var sub = await reg.pushManager.getSubscription();
+      if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlB64ToUint8Array(CONFIG.VAPID_PUBLIC_KEY) });
+      var j = sub.toJSON();
+      var res = await Sync.client.from('push_subscriptions').upsert({
+        user_id: Sync.user.id, endpoint: j.endpoint, p256dh: j.keys.p256dh, auth: j.keys.auth,
+        remind_at: time, tz: Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Los_Angeles',
+        plan_start: planStartKey(), device_label: this.deviceLabel()
+      }, { onConflict: 'endpoint' });
+      if (res.error) throw res.error;
+      ls.set('mp_push', { on: true, time: time });
+    },
+    disable: async function () {
+      var sub = await this.current();
+      if (sub) {
+        if (Sync.client && Sync.user) await Sync.client.from('push_subscriptions').delete().eq('endpoint', sub.endpoint);
+        await sub.unsubscribe();
+      }
+      ls.set('mp_push', { on: false, time: ($('#remindAt') || {}).value || '20:30' });
+    },
+    updateTime: async function (time) {
+      var sub = await this.current();
+      if (sub && Sync.client && Sync.user) {
+        var res = await Sync.client.from('push_subscriptions').update({ remind_at: time, tz: Intl.DateTimeFormat().resolvedOptions().timeZone }).eq('endpoint', sub.endpoint);
+        if (res.error) throw res.error;
+      }
+      var st = ls.get('mp_push', {}); st.time = time; ls.set('mp_push', st);
+    },
+    test: async function () {
+      var sub = await this.current();
+      if (!sub) throw new Error('Reminders are not on for this device.');
+      var sess = await Sync.client.auth.getSession();
+      var token = sess.data.session && sess.data.session.access_token;
+      var r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/, '') + '/functions/v1/' + CONFIG.REMINDER_FUNCTION, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token, 'apikey': CONFIG.SUPABASE_KEY },
+        body: JSON.stringify({ mode: 'test', endpoint: sub.endpoint })
+      });
+      if (!r.ok) throw new Error('Test failed (' + r.status + '): ' + (await r.text()).slice(0, 200));
+    }
+  };
+
+  // ================= rendering: header badge =================
+  function renderBadge() {
+    var b = $('#syncBadge'); if (!b) return;
+    b.className = 'sync';
+    if (!configured()) { b.textContent = 'Local only'; return; }
+    if (!Sync.user) { b.textContent = 'Not signed in'; b.classList.add('warn'); return; }
+    if (typeof navigator !== 'undefined' && navigator.onLine === false) { b.textContent = 'Offline, will sync'; b.classList.add('warn'); return; }
+    if (Sync.lastErr) { b.textContent = 'Sync problem'; b.classList.add('warn'); return; }
+    if (Sync.busy || KV.outbox.length) { b.textContent = 'Syncing…'; return; }
+    if (Sync.lastOk) {
+      b.textContent = 'Synced ' + new Date(Sync.lastOk).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      b.classList.add('ok');
+    } else b.textContent = 'Signed in';
+  }
+
+  // ================= rendering: today =================
+  function checkLi(text, key, interactive) {
+    if (!interactive) return '<li>' + esc(text) + '</li>';
+    var checked = KV.get(key, false) ? ' checked' : '';
+    return '<li><label><input type="checkbox" data-kv="' + esc(key) + '"' + checked + '><span>' + esc(text) + '</span></label></li>';
+  }
+  function list(items, prefix, interactive) {
+    return '<ul class="' + (interactive ? 'check' : 'plainlist') + '">' +
+      items.map(function (t, i) { return checkLi(t, prefix + i, interactive); }).join('') + '</ul>';
+  }
+
+  function renderToday() {
+    todayKey = localDateKey();
+    auto = positionFor(new Date());
+    var live = isViewingToday();
+    var dl = $('#dateline');
+    if (auto.pre) {
+      dl.textContent = 'The plan starts ' + parseDateKey(planStartKey()).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }) + ' with Week A, Day 1. Until then, Today shows Day 1 so you can log and practice.';
+    } else if (live) {
+      dl.textContent = 'Today is Week ' + auto.w + ', Day ' + auto.d + '.';
+    } else {
+      dl.innerHTML = 'Previewing Week ' + view.w + ', Day ' + view.d + '. Checklists and the food log only save for today. <button class="linkbtn" id="backToday" type="button">Back to today</button>';
+    }
+    $$('[data-week]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.week === view.w)); });
+    $$('[data-day]').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.dataset.day === view.d)); });
+    var J = currentJobs();
+    $$('[data-job]').forEach(function (b) { b.setAttribute('aria-pressed', String(J.indexOf(b.dataset.job) >= 0)); });
+
+    var w = view.w, d = view.d;
+    var gym = J.indexOf('gym') >= 0, retail = J.indexOf('retail') >= 0, pet = J.indexOf('pet') >= 0;
+    var fish = fishOn();
+    $$('[data-dinner]').forEach(function (b) { b.setAttribute('aria-pressed', String((b.dataset.dinner === 'fish') === fish)); });
+    var x = dayPlan(w, d, { fish: fish });
+    var snackTxt = d === 7 ? "Siggi's from a work fridge (or home)" : x.snack.n;
+    var bagPrefix = 'bag:' + todayKey + ':';
+    var shakeWhere = retail ? 'retail bag, for your break' : 'gym bag';
+
+    // tonight
+    var tn = tonightLines(w, d, live && auto.pre);
+    if (fish) {
+      tn.unshift('Fish night: put the ' + x.dk + ' dinner container in the freezer as a backup meal. It\'s fine to refreeze since it thawed in the fridge.');
+    }
+    $('#tonightBox').innerHTML = '<div class="tonight"><h3>Tonight</h3>' + list(tn, bagPrefix + 'tn' + (fish ? 'f' : ''), live) + '</div>';
+
+    // bags
+    var home = ['Sea moss, one spoonful'];
+    var gymB = [], retB = [], petB = [];
+    if (gym) {
+      home.push('Creatine water', 'Protein shake: drink it now if you\'re hungry, or pack it in the ' + shakeWhere);
+      if (!x.gymDay) gymB.push('Breakfast: ' + x.br.n);
+      gymB.push('Snack: ' + snackTxt, x.lunchTxt, 'Ice pack');
+      if (fish) home.push(x.dinnerTxt);
+      else if (retail) retB.push(x.dinnerTxt);
+      else home.push(x.dinnerTxt + ', at home');
+      if (retail) retB.push('Protein shake, if you didn\'t drink it at home', 'Ice pack');
+      else gymB.splice(gymB.length - 1, 0, 'Protein shake, if you didn\'t drink it at home');
+    } else if (retail) {
+      home.push('Protein shake (1 scoop + 1 cup 2% milk)', 'Breakfast at home: ' + x.br.n, 'Focus tea at home, with breakfast');
+      if (fish) {
+        retB.push('Lunch if your shift covers midday: ' + x.lunchTxt, 'Snack: ' + snackTxt, 'Ice pack');
+        home.push(x.dinnerTxt);
+      } else {
+        retB.push('Whichever meal falls during your shift: ' + x.lunchTxt + ', or ' + x.dinnerTxt, 'Snack: ' + snackTxt, 'Ice pack');
+        home.push('The other main stays home for whenever you are');
+      }
+    } else {
+      home.push('Protein shake (1 scoop + 1 cup 2% milk)', 'Breakfast: ' + x.br.n, 'Snack: ' + snackTxt, x.lunchTxt, x.dinnerTxt);
+    }
+    if ((gym || retail || pet) && !x.gymDay) home.push('Trail mix pouch into your daily bag');
+    if (pet) {
+      petB.push('¼ cup trail mix', 'Water bottle');
+      if (gym || retail) petB.push("Grab a spare Siggi's from a work fridge for the gap between jobs");
+    }
+    var bags = '<div class="bag home"><h3>At home</h3>' + list(home, bagPrefix + 'h', live) + '</div>';
+    if (gymB.length) bags += '<div class="bag gym"><h3>Gym bag</h3>' + list(gymB, bagPrefix + 'g', live) +
+      (x.gymDay ? '<p class="where" style="margin:.4rem 0 0">Breakfast is already at the gym: Siggi\'s in the fridge, trail mix and chia in the bin.</p>' : '') + '</div>';
+    if (retB.length) bags += '<div class="bag retail"><h3>Retail bag</h3>' + list(retB, bagPrefix + 'r', live) + '</div>';
+    if (petB.length) bags += '<div class="bag pet"><h3>Pet-sitting pouch</h3>' + list(petB, bagPrefix + 'p', live) + '</div>';
+    $('#bagsBox').innerHTML = '<div class="bags">' + bags + '</div>';
+
+    // timeline
+    var T = [];
+    var packed = (gym && retail) || ((gym || retail) && pet);
+    if (gym) {
+      T.push(['~5:10', 'Sea moss and creatine water, then out the door. Have the shake now if you\'re hungry; otherwise it rides along.', 'Home', 'home']);
+      T.push(['~6:00', 'Focus tea; write your top three tasks', 'Gym bin', 'gym']);
+      T.push(['~8:00', 'Breakfast: ' + x.br.n, x.gymDay ? 'Gym fridge and bin' : 'Gym bag', 'gym']);
+      T.push(['~9:30', 'Ginger tea', 'Gym fridge', 'gym']);
+      T.push(['~10:30', 'Snack: ' + snackTxt, 'Gym bag', 'gym']);
+      T.push(['~12:15', 'Lunch with ¼ cup kimchi and papaya seed', 'Gym fridge', 'gym']);
+      if (retail) T.push(['Retail break', 'Protein shake, if you didn\'t have it at 5:10', 'Retail bag', 'retail']);
+      else T.push(['~2:00', 'Protein shake, if you didn\'t have it at 5:10', 'Gym bag or home', 'home']);
+    } else {
+      T.push(['Morning', 'Sea moss, shake, focus tea, breakfast', 'Home', 'home']);
+      T.push(['Mid-morning', 'Ginger tea and creatine water', retail ? 'Home or retail bin' : 'Home', retail ? 'retail' : 'home']);
+      T.push(['Mid-morning or between things', 'Snack: ' + snackTxt, retail ? 'Retail bag or home' : 'Home', retail ? 'retail' : 'home']);
+      T.push(['Midday', 'Lunch with ¼ cup kimchi', retail ? 'Home, or the retail bag if your shift covers it' : 'Home', retail ? 'retail' : 'home']);
+    }
+    if (!x.gymDay) T.push(['~3:00', '¼ cup trail mix', retail ? 'Retail bin' : (gym ? 'Daily bag' : 'Home'), retail ? 'retail' : 'home']);
+    if (pet) T.push(['Pet visit', 'Pouch trail mix, plus a Siggi\'s if it has been more than 3 hours since you ate', 'Pet-sitting pouch', 'pet']);
+    if (packed) T.push(['When you get home', 'Broth, if there is time for the 10–15 minute steep. Skip it otherwise.', 'Home', 'home']);
+    else T.push(['~5:30', 'Broth: steep the herbs, garlic in the mug', 'Home', 'home']);
+    if (fish) T.push(['Dinner', 'Sheet-pan fish, about 25 minutes, mostly hands-off. Kimchi on the side.', 'Home', 'home']);
+    else if (gym && retail) T.push(['Dinner', 'Dinner on your store break, or at home if your shift ends first', 'Retail bag', 'retail']);
+    else if (retail && !gym) T.push(['Dinner', 'Dinner, wherever your shift puts you', 'Retail bag or home', 'retail']);
+    else T.push(['~6:30', 'Dinner with kimchi', 'Home', 'home']);
+    T.push(['1 hour before bed', 'Evening tea with 1–2 crushed cloves, lid on, screens off', 'Home', 'home']);
+    $('#timelineBox').innerHTML = '<h3 style="margin-top:1rem">How the day runs</h3><ol class="timeline">' +
+      T.map(function (t) { return '<li class="' + t[3] + '"><span class="when">' + esc(t[0]) + '</span><br>' + esc(t[1]) + '<br><span class="where">' + esc(t[2]) + '</span></li>'; }).join('') +
+      '</ol>';
+
+    renderLog(live, x);
+  }
+
+  function meter(label, val, target, unit) {
+    var pct = target > 0 ? Math.min(100, (val / target) * 100) : 0;
+    var over = val > target * 1.1;
+    return '<div class="meter"><div class="lab"><span>' + label + '</span><span><b>' + r0(val) + '</b> / ' + r0(target) + unit + '</span></div>' +
+      '<div class="bar' + (over ? ' over' : '') + '" role="progressbar" aria-label="' + label + '" aria-valuemin="0" aria-valuemax="' + r0(target) + '" aria-valuenow="' + r0(val) + '"><span style="width:' + pct.toFixed(1) + '%"></span></div></div>';
+  }
+
+  function renderLog(live, x) {
+    var box = $('#logBox');
+    if (!live) {
+      box.innerHTML = '<div class="card"><h3 style="margin-top:0">Planned for this day</h3><p>' + r0(x.k) + ' kcal, ' + r0(x.p) + ' g protein, ' + r0(x.f) + ' g fiber. Estimates, ±10%.</p></div>';
+      return;
+    }
+    var L = logFor(todayKey);
+    var t = targets();
+    var h = '<div class="card"><h3 style="margin-top:0">What you\'ve eaten today</h3>' +
+      '<div class="meters">' + meter('Calories', L.eaten.k, t.k, '') + meter('Protein', L.eaten.p, t.p, ' g') + meter('Fiber', L.eaten.f, t.f, ' g') + '</div>' +
+      '<p class="muted" style="font-size:.88rem">The plan for today adds up to about ' + r0(L.plan.k) + ' kcal, ' + r0(L.plan.p) + ' g protein and ' + r0(L.plan.f) + ' g fiber.</p>';
+    h += '<div>' + L.plan.items.map(function (i) {
+      var key = 'log:' + todayKey + ':' + i.id;
+      var on = KV.get(key, false);
+      return '<div class="logrow"><label style="display:flex;gap:.55rem;align-items:flex-start;cursor:pointer"><input type="checkbox" data-kv="' + key + '"' + (on ? ' checked' : '') +
+        ' style="flex:none;width:1.2rem;height:1.2rem;margin-top:.2rem;accent-color:var(--herb)"><span>' + esc(i.n) + '</span></label><span class="nums">' + r0(i.k) + ' kcal<br>' + r0(i.p) + ' g</span></div>';
+    }).join('') + '</div>';
+    h += '<h3>Extras</h3><div>' + EXTRAS.map(function (e) {
+      var key = 'log:' + todayKey + ':' + e.id;
+      var c = +KV.get(key, 0) || 0;
+      return '<div class="logrow"><span>' + esc(e.n) + '<br><span class="muted" style="font-size:.85rem">' + e.k + ' kcal, ' + e.p + ' g protein each</span></span>' +
+        '<span class="stepper"><button type="button" data-step="' + key + '" data-delta="-1" aria-label="One less ' + esc(e.n) + '">−</button><b aria-live="polite">' + c + '</b>' +
+        '<button type="button" data-step="' + key + '" data-delta="1" aria-label="One more ' + esc(e.n) + '">+</button></span></div>';
+    }).join('') + '</div>';
+    h += '<h3>Something else</h3>';
+    if (L.customs.length) {
+      h += '<div>' + L.customs.map(function (c) {
+        return '<div class="logrow"><span>' + esc(c.v.n) + '<br><span class="muted" style="font-size:.85rem">' + r0(+c.v.k || 0) + ' kcal, ' + r0(+c.v.p || 0) + ' g protein, ' + r0(+c.v.f || 0) + ' g fiber</span></span>' +
+          '<button type="button" class="linkbtn" data-remove="' + esc(c.key) + '">Remove</button></div>';
+      }).join('') + '</div>';
+    }
+    h += '<div class="addform">' +
+      '<div class="field full"><label for="cName">What was it?</label><input id="cName" maxlength="80" placeholder="e.g. Latte with oat milk"></div>' +
+      '<div class="field"><label for="cK">Calories</label><input id="cK" type="number" inputmode="decimal" min="0"></div>' +
+      '<div class="field"><label for="cP">Protein (g)</label><input id="cP" type="number" inputmode="decimal" min="0"></div>' +
+      '<div class="field"><label for="cF">Fiber (g)</label><input id="cF" type="number" inputmode="decimal" min="0"></div>' +
+      '</div><p><button class="btn" type="button" id="cAdd">Add to today</button> <span class="status" id="cMsg" role="status"></span></p>';
+    h += renderHistory();
+    h += '</div>';
+    box.innerHTML = h;
+  }
+
+  function renderHistory() {
+    var rows = '';
+    for (var i = 1; i <= 7; i++) {
+      var dt = new Date(); dt.setDate(dt.getDate() - i);
+      var k = localDateKey(dt);
+      var L = logFor(k);
+      if (!L.any) continue;
+      rows += '<tr><td>' + dt.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) + '</td><td>' + r0(L.eaten.k) + '</td><td>' + r0(L.eaten.p) + ' g</td><td>' + r0(L.eaten.f) + ' g</td></tr>';
+    }
+    if (!rows) return '';
+    return '<h3>Last 7 days</h3><div class="scroll"><table class="small"><thead><tr><th>Day</th><th>kcal</th><th>Protein</th><th>Fiber</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+  }
+
+  // ================= rendering: weeks table =================
+  function renderTables() {
+    ['A', 'B'].forEach(function (w) {
+      var h = '<thead><tr><th>Day</th><th>Breakfast</th><th>Snack</th><th>Lunch</th><th>Dinner</th><th>Stored</th><th>Est. total</th></tr></thead><tbody>';
+      for (var d = 1; d <= 7; d++) {
+        var x = dayPlan(w, d);
+        h += '<tr><td><b>Day ' + d + '</b><br>' + DAYN[d - 1] + '</td><td>' + esc(x.br.n) + '</td><td>' + esc(x.snack.n.replace(' + 1 tsp honey', '')) + '</td>' +
+          '<td><b>' + x.lk + '</b> ' + esc(x.lunch.n) + '</td><td><b>' + x.dk + '</b> ' + esc(x.dinner.n) + '</td>' +
+          '<td>' + (x.frozen ? '<span class="tag freezer">freezer</span>' : '<span class="tag fridge">fridge</span>') + '</td>' +
+          '<td>' + r0(x.k) + ' kcal<br>' + r0(x.p) + ' g protein<br>' + r0(x.f) + ' g fiber</td></tr>';
+      }
+      var el = $('#tbl' + w); if (el) el.innerHTML = h + '</tbody>';
+    });
+  }
+
+  // ================= static checklists (shopping, stash) =================
+  function initStaticLists() {
+    $$('[data-list]').forEach(function (box) {
+      var name = box.dataset.list;
+      var lists = box.matches('ul') ? [box] : $$('ul.check', box);
+      var n = 0;
+      lists.forEach(function (ul) {
+        $$('li', ul).forEach(function (li) {
+          var key = 'shop:' + name + '_' + (n++);
+          li.innerHTML = '<label><input type="checkbox" data-kv="' + key + '"><span>' + li.innerHTML + '</span></label>';
+        });
+      });
+    });
+    syncStaticLists();
+  }
+  function syncStaticLists() {
+    $$('#shop [data-kv], #drinks [data-kv]').forEach(function (c) { c.checked = !!KV.get(c.dataset.kv, false); });
+  }
+
+  // ================= rendering: settings =================
+  function setStatus(id, msg, bad) {
+    var el = $(id); if (!el) return;
+    el.textContent = msg || '';
+    el.classList.toggle('bad', !!bad);
+  }
+  function renderSyncStatus() {
+    if (!Sync.user) return;
+    var msg = Sync.lastErr ? 'Last sync failed: ' + Sync.lastErr
+      : (Sync.lastOk ? 'Last synced ' + new Date(Sync.lastOk).toLocaleString() : 'Not synced yet');
+    if (KV.outbox.length) msg += '. ' + KV.outbox.length + ' change' + (KV.outbox.length === 1 ? '' : 's') + ' waiting.';
+    setStatus('#syncStatus', msg, !!Sync.lastErr);
+  }
+  async function renderPushStatus() {
+    var on = $('#pushOn'), off = $('#pushOff'), test = $('#pushTest');
+    var st = ls.get('mp_push', { on: false, time: '20:30' });
+    var ra = $('#remindAt'); if (ra && document.activeElement !== ra) ra.value = st.time || '20:30';
+    if (!Push.supported()) {
+      setStatus('#pushStatus', Push.isIOS() && !Push.standalone()
+        ? 'On iPhone and iPad, reminders only work from the Home Screen app. In Safari, tap Share, then Add to Home Screen, and open it from there.'
+        : 'This browser does not support push reminders.', true);
+      on.disabled = true; off.hidden = true; test.hidden = true; return;
+    }
+    if (!configured() || !CONFIG.VAPID_PUBLIC_KEY) { setStatus('#pushStatus', 'Finish the Supabase and VAPID setup in CONFIG to turn this on.', true); on.disabled = true; return; }
+    if (!Sync.user) { setStatus('#pushStatus', 'Sign in first.', true); on.disabled = true; off.hidden = true; test.hidden = true; return; }
+    on.disabled = false;
+    var sub = null;
+    try { sub = await Push.current(); } catch (e) { }
+    var perm = window.Notification ? Notification.permission : 'default';
+    if (sub && perm === 'granted') {
+      setStatus('#pushStatus', 'On. You\'ll get a reminder around ' + (st.time || '20:30') + ' each night.');
+      on.hidden = true; off.hidden = false; test.hidden = false;
+    } else {
+      setStatus('#pushStatus', perm === 'denied' ? 'Notifications are blocked for this app. Allow them in Settings > Notifications.' : 'Off on this device.', perm === 'denied');
+      on.hidden = false; off.hidden = true; test.hidden = true;
+    }
+  }
+  function renderSettings() {
+    var so = $('#acctSignedOut'), si = $('#acctSignedIn');
+    if (!so) return;
+    if (!configured()) {
+      $('#acctOut').innerHTML = '<p class="status bad">Sync isn\'t set up yet. Fill in SUPABASE_URL and SUPABASE_KEY in the CONFIG block of index.html.</p>';
+      so.hidden = true; si.hidden = true;
+    } else if (Sync.user) {
+      $('#acctOut').innerHTML = '';
+      so.hidden = true; si.hidden = false;
+      $('#acctEmail').textContent = Sync.user.email || '';
+      renderSyncStatus();
+    } else {
+      $('#acctOut').innerHTML = '';
+      so.hidden = false; si.hidden = true;
+    }
+    var t = targets();
+    ['k', 'p', 'f'].forEach(function (z) { var el = $('#t' + z.toUpperCase()); if (el && document.activeElement !== el) el.value = t[z]; });
+    var ps = $('#planStart'); if (ps && document.activeElement !== ps) ps.value = planStartKey();
+    $('#versionLine').textContent = 'Meal Prep ' + APP_VERSION;
+    renderPushStatus();
+  }
+
+  function renderAll() { renderToday(); renderTables(); syncStaticLists(); renderSettings(); renderBadge(); }
+
+  // ================= events =================
+  function bind() {
+    $$('nav.tabs button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        $$('nav.tabs button').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+        $$('section[role=tabpanel]').forEach(function (s) { s.hidden = s.id !== b.dataset.tab; });
+        window.scrollTo(0, 0);
+        if (b.dataset.tab === 'settings') renderSettings();
+      });
+    });
+    $('#syncBadge').addEventListener('click', function () { var t = $('nav.tabs button[data-tab="settings"]'); if (t) t.click(); });
+
+    $$('[data-week]').forEach(function (b) { b.addEventListener('click', function () { view.w = b.dataset.week; view.jobs = null; view.fish = false; renderToday(); }); });
+    $$('[data-day]').forEach(function (b) { b.addEventListener('click', function () { view.d = +b.dataset.day; view.jobs = null; view.fish = false; renderToday(); }); });
+    $$('[data-dinner]').forEach(function (b) {
+      b.addEventListener('click', function () { setFish(b.dataset.dinner === 'fish'); renderToday(); });
+    });
+    $$('[data-job]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var j = b.dataset.job, J = currentJobs().slice();
+        var i = J.indexOf(j);
+        if (i >= 0) J.splice(i, 1); else J.push(j);
+        setJobs(J); renderToday();
+      });
+    });
+
+    document.addEventListener('change', function (e) {
+      var k = e.target && e.target.dataset && e.target.dataset.kv;
+      if (!k) return;
+      KV.set(k, !!e.target.checked);
+      if (k.indexOf('log:') === 0) renderToday();
+    });
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (!t || !t.closest) return;
+      if (t.id === 'backToday') { view = { w: auto.w, d: auto.d, jobs: null }; renderToday(); return; }
+      var step = t.closest('[data-step]');
+      if (step) {
+        var k = step.dataset.step;
+        var c = Math.max(0, (+KV.get(k, 0) || 0) + (+step.dataset.delta));
+        KV.set(k, c); renderToday(); return;
+      }
+      var rm = t.closest('[data-remove]');
+      if (rm) { KV.set(rm.dataset.remove, null); renderToday(); return; }
+      if (t.id === 'cAdd') {
+        var name = ($('#cName').value || '').trim();
+        var kc = parseFloat($('#cK').value), pr = parseFloat($('#cP').value), fi = parseFloat($('#cF').value);
+        if (!name) { setStatus('#cMsg', 'Add a name first.', true); return; }
+        if (!(kc >= 0)) { setStatus('#cMsg', 'Add the calories (a number).', true); return; }
+        var id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+        KV.set('log:' + todayKey + ':c:' + id, { n: name.slice(0, 80), k: kc, p: pr >= 0 ? pr : 0, f: fi >= 0 ? fi : 0, at: Date.now() });
+        renderToday();
+        setStatus('#cMsg', 'Added ' + name + '.');
+      }
+    });
+
+    $('#clearShop') && $('#clearShop').addEventListener('click', function () {
+      $$('#shop [data-kv]').forEach(function (c) { if (KV.get(c.dataset.kv, false)) KV.set(c.dataset.kv, false); c.checked = false; });
+    });
+
+    // account
+    $('#sendCode').addEventListener('click', async function () {
+      var email = ($('#email').value || '').trim();
+      if (!/^\S+@\S+\.\S+$/.test(email)) { setStatus('#acctOut', ''); $('#acctOut').innerHTML = '<p class="status bad">Enter a valid email.</p>'; return; }
+      this.disabled = true;
+      try {
+        await Sync.sendCode(email);
+        $('#codeStep').hidden = false;
+        $('#acctOut').innerHTML = '<p class="status">Code sent to ' + esc(email) + '. It can take a minute to arrive.</p>';
+        $('#otp').focus();
+      } catch (err) {
+        $('#acctOut').innerHTML = '<p class="status bad">Couldn\'t send the code: ' + esc(err.message || err) + '</p>';
+      } finally { this.disabled = false; }
+    });
+    $('#verifyCode').addEventListener('click', async function () {
+      var email = ($('#email').value || '').trim(), code = ($('#otp').value || '').replace(/\s/g, '');
+      this.disabled = true;
+      try {
+        await Sync.verify(email, code);
+        $('#acctOut').innerHTML = '';
+        $('#codeStep').hidden = true; $('#otp').value = '';
+      } catch (err) {
+        $('#acctOut').innerHTML = '<p class="status bad">That code didn\'t work: ' + esc(err.message || err) + '</p>';
+      } finally { this.disabled = false; }
+    });
+    $('#syncNow').addEventListener('click', function () { Sync.now(); });
+    $('#signOut').addEventListener('click', async function () { await Sync.signOut(); renderAll(); });
+
+    // push
+    $('#pushOn').addEventListener('click', async function () {
+      var time = $('#remindAt').value || '20:30';
+      this.disabled = true;
+      try { await Push.enable(time); } catch (err) { setStatus('#pushStatus', err.message || String(err), true); this.disabled = false; return; }
+      this.disabled = false;
+      renderPushStatus();
+    });
+    $('#pushOff').addEventListener('click', async function () {
+      try { await Push.disable(); } catch (err) { setStatus('#pushStatus', err.message || String(err), true); return; }
+      renderPushStatus();
+    });
+    $('#pushTest').addEventListener('click', async function () {
+      setStatus('#pushStatus', 'Sending…');
+      try { await Push.test(); setStatus('#pushStatus', 'Sent. It should show up within a few seconds.'); }
+      catch (err) { setStatus('#pushStatus', err.message || String(err), true); }
+    });
+    $('#remindAt').addEventListener('change', async function () {
+      try { await Push.updateTime(this.value); renderPushStatus(); } catch (err) { setStatus('#pushStatus', err.message || String(err), true); }
+    });
+
+    // targets & start
+    $('#saveTargets').addEventListener('click', function () {
+      KV.set('set:targets', { k: +$('#tK').value || DEFAULT_TARGETS.k, p: +$('#tP').value || DEFAULT_TARGETS.p, f: +$('#tF').value || DEFAULT_TARGETS.f });
+      renderAll();
+    });
+    $('#savePlanStart').addEventListener('click', async function () {
+      var v = $('#planStart').value;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) { setStatus('#startStatus', 'Pick a date.', true); return; }
+      if (parseDateKey(v).getDay() !== 1) { setStatus('#startStatus', 'Pick a Monday, since Day 1 is Monday.', true); return; }
+      KV.set('set:start', v);
+      view = { w: 'A', d: 1, jobs: null };
+      auto = positionFor(new Date());
+      view.w = auto.w; view.d = auto.d;
+      setStatus('#startStatus', 'Saved.');
+      if (Sync.client && Sync.user) {
+        var res = await Sync.client.from('push_subscriptions').update({ plan_start: v }).eq('user_id', Sync.user.id);
+        if (res.error) setStatus('#startStatus', 'Saved here, but the reminder schedule didn\'t update: ' + res.error.message, true);
+      }
+      renderAll();
+    });
+
+    // day rollover while the app stays open
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible' && localDateKey() !== todayKey) {
+        todayKey = localDateKey(); auto = positionFor(new Date());
+        view = { w: auto.w, d: auto.d, jobs: null };
+        renderAll();
+      }
+    });
+  }
+
+  // ================= boot =================
+  function boot() {
+    initStaticLists();
+    bind();
+    renderAll();
+    Sync.init();
+    if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) {
+      navigator.serviceWorker.register('./sw.js').catch(function () { });
+    }
+  }
+
+  // test hooks
+  window.__mp = { KV: KV, Sync: Sync, Push: Push, dayPlan: dayPlan, positionFor: positionFor, tonightLines: tonightLines,
+    logFor: logFor, localDateKey: localDateKey, CONFIG: CONFIG, renderAll: renderAll, view: function () { return view; } };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "meal-prep",
+  "version": "1.1.2",
+  "private": true,
+  "description": "Two-week meal prep PWA (vanilla HTML/CSS/JS, Supabase sync, web push reminders)",
+  "scripts": {
+    "check": "node -e \"const s=require('fs').readFileSync('index.html','utf8');const m=s.match(/<script>([\\s\\S]*?)<\\/script>/g);require('fs').writeFileSync('/tmp/mp-extracted.js',m[m.length-1].replace(/<\\/?script>/g,''))\" && node --check /tmp/mp-extracted.js && node --check sw.js",
+    "test": "node --test --test-force-exit tests/app.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.3"
+  }
+}
